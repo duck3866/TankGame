@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,10 +23,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        PlayerMove();
-        Shooting();
-        TurretRotate();
-        MuzzleRotate();
+        // PlayerMove();
+        // Shooting();
+        // TurretRotate();
+        // MuzzleRotate();
     }
 
     private void PlayerMove()
@@ -54,6 +57,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.currentSelectedGameObject)
+            {
+                return;
+            }
             GameObject bullet = Instantiate(bulletFactory);
             bullet.transform.position = shootingPoint.transform.position;
             Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
