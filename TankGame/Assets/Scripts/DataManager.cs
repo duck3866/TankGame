@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DataManager : MonoBehaviour
 {
@@ -16,8 +17,12 @@ public class DataManager : MonoBehaviour
 
     [SerializeField] private int poolSize;
     private GameObject[] _objectList;
-    private int _mapIndex;
+    [SerializeField] private int _mapIndex;
     
+    [SerializeField] private float dropHeight = 10f;  // 블록이 시작할 높이
+    [SerializeField] private float dropDuration = 1f; // 떨어지는데 걸리는 시간
+    [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
+
     private void Awake()
     {
         _mapIndex = 0;
@@ -33,11 +38,15 @@ public class DataManager : MonoBehaviour
         ResetList();
         _datas = JsonUtility.FromJson<AllData>(data.text);
         player = Instantiate(player);
+        player.SetActive(false);
+    }
+    private void Start()
+    {
+        ChangeMap(_mapIndex);
     }
 
     private void ResetList()
     {
-        
         for (int i = 0; i < poolSize; i++)
         {
             _objectList[i].SetActive(false);
@@ -46,6 +55,7 @@ public class DataManager : MonoBehaviour
     private GameObject GetObject()
     {
         int count = 0;
+        
         for (int i = 0; i < poolSize; i++)
         {
             if (_objectList[i].activeSelf == false)
@@ -57,29 +67,12 @@ public class DataManager : MonoBehaviour
         }
         return _objectList[count];
     }
-
-    public void OnClickButton(int index)
-    {
-        player.SetActive(false);
-        ResetList();
-        if (index > 0)
-        {
-            if (_mapIndex > 0)
-            {
-                _mapIndex--;    
-            }
-        }
-        else if(index < 0)
-        {
-            if (_mapIndex < _datas.Stage.Length - 1)
-            {
-                _mapIndex++;    
-            }
-        }
-        ChangeMap(_mapIndex);
-    }
-
     private void ChangeMap(int value)
+    {
+        StartCoroutine(FallingBlock(value));
+    }
+    
+    private IEnumerator FallingBlock(int value)
     {
         int x = _datas.Stage[value].horizontal;
         int y = _datas.Stage[value].vertical;
@@ -88,17 +81,45 @@ public class DataManager : MonoBehaviour
             for (int j = 0; j < y; j++)
             {
                 GameObject obj = GetObject();
-                obj.transform.position = new Vector3(i, 0, j);
+                StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
+                yield return new WaitForSeconds(blockDelay);
             }
         }
         int playerX = _datas.Stage[value].x;
         int playerY = _datas.Stage[value].y;
         player.SetActive(true);
         player.transform.position = new Vector3(playerX, 0.55f, playerY);
+        yield return null;
     }
-    private void Start()
+
+    private IEnumerator DropBlock(GameObject obj, Vector3 startPos, Vector3 endPos)
     {
-        ChangeMap(0);
+        float elapsed = 0f;
+        obj.transform.position = startPos;
+        
+        while (elapsed < dropDuration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = elapsed / dropDuration;
+            float easeProgress = 1f - Mathf.Pow(1f - progress, 3);
+            obj.transform.position = Vector3.Lerp(startPos, endPos, easeProgress);
+            yield return null;
+        }
+        
+        obj.transform.position = endPos;
+    }
+
+    public void OnClickPlus()
+    {
+        _mapIndex++;
+        ResetList();
+        ChangeMap(_mapIndex);
+    }
+    public void OnClickMinus()
+    {
+        _mapIndex--;
+        ResetList();
+        ChangeMap(_mapIndex);
     }
 }
 [Serializable]
