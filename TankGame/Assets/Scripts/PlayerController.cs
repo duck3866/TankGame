@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // PlayerMove();
+        PlayerMove();
         // Shooting();
         // TurretRotate();
         // MuzzleRotate();
@@ -37,21 +37,17 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100f))
             {
-                destinationPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                shouldMove = true;
+                destinationPoint = new Vector3(hit.collider.transform.position.x, transform.position.y, hit.collider.transform.position.z);
+                StartCoroutine(Moveing());
             }
         }
+    }
 
-        if (shouldMove)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(destinationPoint - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,moveSpeed * Time.deltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, destinationPoint, moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position,destinationPoint) < distance)
-            {
-                shouldMove = false;    
-            }
-        }
+    private IEnumerator Moveing()
+    {
+        Debug.Log(Vector3.Distance(destinationPoint,transform.position));
+        yield return null;
+        transform.position = destinationPoint;
     }
     private void Shooting()
     {
