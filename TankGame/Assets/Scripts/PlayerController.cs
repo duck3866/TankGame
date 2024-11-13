@@ -24,31 +24,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerMove();
-        // Shooting();
-        // TurretRotate();
-        // MuzzleRotate();
+        TurretRotate();
+        MuzzleRotate();
     }
 
     private void PlayerMove()
     {
-        if (Input.GetMouseButton(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100f))
-            {
-                destinationPoint = new Vector3(hit.collider.transform.position.x, transform.position.y, hit.collider.transform.position.z);
-                StartCoroutine(Moveing());
-            }
-        }
     }
 
-    private IEnumerator Moveing()
-    {
-        Debug.Log(Vector3.Distance(destinationPoint,transform.position));
-        yield return null;
-        transform.position = destinationPoint;
-    }
     private void Shooting()
     {
         if (Input.GetMouseButtonDown(0))

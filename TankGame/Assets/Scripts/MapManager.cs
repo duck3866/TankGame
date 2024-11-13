@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float dropHeight = 10f;  // 블록이 시작할 높이
     [SerializeField] private float dropDuration = 1f; // 떨어지는데 걸리는 시간
     [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
-
+    
+    public int[,] mapList;
     void Start()
     {
         mapIndex = 0;
@@ -81,10 +83,14 @@ public class MapManager : MonoBehaviour
     {
         int x = DataManager.Instance.datas.Stage[value].horizontal;
         int y = DataManager.Instance.datas.Stage[value].vertical;
+        
+        mapList = new int[x, y];
+        
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
+                mapList[i, j] = 0;
                 GameObject obj = GetObject();
                 StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
                 yield return new WaitForSeconds(blockDelay);
