@@ -24,12 +24,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerMove();
+        Shooting();
         TurretRotate();
         MuzzleRotate();
     }
 
     private void PlayerMove()
     {
+        
     }
 
     private void Shooting()
@@ -50,16 +52,24 @@ public class PlayerController : MonoBehaviour
     private void TurretRotate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float value = turret.transform.eulerAngles.y;
-        Debug.Log(value);
-        // value = Mathf.Clamp(value, -90f, 90f);
-        turret.transform.eulerAngles += new Vector3(0,horizontal,0);
-        // turret.transform.Rotate(0,horizontal,0);
+        turret.transform.Rotate(0,horizontal,0);
     }
 
     private void MuzzleRotate()
     {
         float vertical = Input.GetAxisRaw("Vertical");
-        muzzle.transform.Rotate(vertical,0,0);
+        float currentXRotation = muzzle.transform.eulerAngles.x;
+        if (currentXRotation > 180)
+        {
+            currentXRotation -= 360;
+        }
+        currentXRotation = Mathf.Clamp(currentXRotation + vertical, -90f, 0f);
+        if (currentXRotation < 0)
+        {
+            currentXRotation += 360;
+        }
+        // muzzle.transform.eulerAngles = new Vector3(currentXRotation, 0, 0);
+        muzzle.transform.localEulerAngles = new Vector3(currentXRotation, 0, 0);
     }
+
 }

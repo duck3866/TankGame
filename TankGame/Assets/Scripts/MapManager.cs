@@ -19,6 +19,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
     
     public int[,] mapList;
+    public Vector3[,] mapVectorList;
 
     private void Awake()
     {
@@ -91,12 +92,14 @@ public class MapManager : MonoBehaviour
         int y = DataManager.Instance.datas.Stage[value].vertical;
         
         mapList = new int[x, y];
+        mapVectorList = new Vector3[x, y];
         
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
                 mapList[i, j] = 0;
+                mapVectorList[i, j] = new Vector3(i, 0, j);
                 GameObject obj = GetObject();
                 StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
                 yield return new WaitForSeconds(blockDelay);
