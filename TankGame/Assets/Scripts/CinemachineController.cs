@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CinemachineController : MonoBehaviour
 {
@@ -10,10 +12,11 @@ public class CinemachineController : MonoBehaviour
     [SerializeField] private float rotSpeed = 200f;
     private GameObject player;
     private Transform playerTransform;
+    private Quaternion firstRotate;
     
     private float my = -51;
     private float mx = 90;
-    void Start()
+    private void Start()
     {
         if (customCam == null)
         {
@@ -21,18 +24,18 @@ public class CinemachineController : MonoBehaviour
         }
         player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.transform;
+        firstRotate = transform.rotation;
         if (playerTransform != null && customCam != null)
         {
             customCam.Follow = playerTransform;
         }
     }
     
-    void Update()
+    private void Update()
     {
-        if (player.activeSelf == true)
+        var cinemachine = customCam.GetCinemachineComponent<CinemachineTransposer>();
+        if (player.activeSelf)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             float mouseX = Input.GetAxisRaw("Mouse X");
             float mouseY = Input.GetAxisRaw("Mouse Y");
         
@@ -41,8 +44,15 @@ public class CinemachineController : MonoBehaviour
         
             my = Mathf.Clamp(my, -90f, 90f);
             transform.eulerAngles = new Vector3(-my, mx, 0);
+            
+            cinemachine.m_FollowOffset = offset;
         }
-        var cinemachine = customCam.GetCinemachineComponent<CinemachineTransposer>();
-        cinemachine.m_FollowOffset = offset;
+        else
+        {
+            transform.rotation = firstRotate;
+            cinemachine.m_FollowOffset = new Vector3(-10, 16, 5);
+        }
+        
     }
+
 }
