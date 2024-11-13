@@ -19,7 +19,14 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
     
     public int[,] mapList;
-    void Start()
+
+    private void Awake()
+    {
+        player = Instantiate(player);
+        player.transform.position = new Vector3(-5, 10, 5);
+    }
+
+    private void Start()
     {
         mapIndex = 0;
         poolSize = DataManager.Instance.datas.Stage[0].horizontal * DataManager.Instance.datas.Stage[0].vertical;
@@ -32,8 +39,7 @@ public class MapManager : MonoBehaviour
         }
         ResetList();
         ChangeMap(mapIndex);
-        player = Instantiate(player);
-        player.SetActive(false);
+        
     }
     private void ResetList()
     {
@@ -98,8 +104,10 @@ public class MapManager : MonoBehaviour
         }
         int playerX = DataManager.Instance.datas.Stage[value].x;
         int playerY = DataManager.Instance.datas.Stage[value].y;
+        
         player.SetActive(true);
         player.transform.position = new Vector3(playerX, 0.55f, playerY);
+        
         yield return null;
     }
 

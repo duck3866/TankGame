@@ -50,7 +50,11 @@ public class PlayerController : MonoBehaviour
     private void TurretRotate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        turret.transform.Rotate(0,horizontal,0);
+        float value = turret.transform.eulerAngles.y;
+        Debug.Log(value);
+        // value = Mathf.Clamp(value, -90f, 90f);
+        turret.transform.eulerAngles += new Vector3(0,horizontal,0);
+        // turret.transform.Rotate(0,horizontal,0);
     }
 
     private void MuzzleRotate()
