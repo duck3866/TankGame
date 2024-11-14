@@ -1169,9 +1169,9 @@ MonoBehaviour:
   player: {fileID: 5444145848116010292, guid: b34fa1da317624a658090201144c581c, type: 3}
   poolSize: 50
   mapIndex: 0
-  dropHeight: 10
+  dropHeight: 20
   dropDuration: 0.01
-  blockDelay: 0.0001
+  blockDelay: 0.001
 --- !u!1 &2062160842
 GameObject:
   m_ObjectHideFlags: 0

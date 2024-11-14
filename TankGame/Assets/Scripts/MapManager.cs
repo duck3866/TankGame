@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    public static MapManager Instace = null;
+    
     public GameObject block;
     public Transform parent;
 
     public GameObject player;
+    private PlayerController _playerController;
     
     [SerializeField] private int poolSize;
     private GameObject[] _objectList;
@@ -17,13 +20,19 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float dropHeight = 10f;  // 블록이 시작할 높이
     [SerializeField] private float dropDuration = 1f; // 떨어지는데 걸리는 시간
     [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
-    
-    public int[,] mapList;
-    public Vector3[,] mapVectorList;
 
+    public int[,] MapList;
+
+    public int x;
+    public int y;
     private void Awake()
     {
+        if (Instace == null)
+        {
+            Instace = this;
+        }
         player = Instantiate(player);
+        _playerController = player.GetComponent<PlayerController>();
         player.transform.position = new Vector3(-5, 10, 5);
     }
 
@@ -88,18 +97,16 @@ public class MapManager : MonoBehaviour
     }
     private IEnumerator FallingBlock(int value)
     {
-        int x = DataManager.Instance.datas.Stage[value].horizontal;
-        int y = DataManager.Instance.datas.Stage[value].vertical;
-        
-        mapList = new int[x, y];
-        mapVectorList = new Vector3[x, y];
-        
+        x = DataManager.Instance.datas.Stage[value].horizontal;
+        y = DataManager.Instance.datas.Stage[value].vertical;
+        Debug.Log($"{x} 랑 {y}");
+        MapList = new int[x, y];
+
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                mapList[i, j] = 0;
-                mapVectorList[i, j] = new Vector3(i, 0, j);
+                MapList[i, j] = i+j;
                 GameObject obj = GetObject();
                 StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
                 yield return new WaitForSeconds(blockDelay);
@@ -107,6 +114,9 @@ public class MapManager : MonoBehaviour
         }
         int playerX = DataManager.Instance.datas.Stage[value].x;
         int playerY = DataManager.Instance.datas.Stage[value].y;
+        // MapList[playerX, playerY] = 1;
+        _playerController.playerX = playerX;
+        _playerController.playerY = playerY;
         
         player.SetActive(true);
         player.transform.position = new Vector3(playerX, 0.55f, playerY);
