@@ -99,7 +99,6 @@ public class MapManager : MonoBehaviour
     {
         x = DataManager.Instance.datas.Stage[value].horizontal;
         y = DataManager.Instance.datas.Stage[value].vertical;
-        Debug.Log($"{x} 랑 {y}");
         MapList = new int[x, y];
 
         for (int i = 0; i < x; i++)
@@ -109,6 +108,7 @@ public class MapManager : MonoBehaviour
                 MapList[i, j] = i+j;
                 GameObject obj = GetObject();
                 StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
+                obj.name = i + "/" + j; 
                 yield return new WaitForSeconds(blockDelay);
             }
         }

@@ -17,27 +17,35 @@ public class PlayerController : MonoBehaviour
     public int playerX;
     public int playerY;
 
+    public enum PlayerState
+    {
+        Ready,
+        Move,
+        Shoot,
+        End
+    }
+
+    private PlayerState _playerState;
     private void Start()
     {
+        _playerState = PlayerState.Ready;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (!isAttackMode && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            isAttackMode = true;
+            Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast,out raycastHit))
+            {
+                Debug.Log($"{raycastHit.collider.name} 클릭한 오브젝트 이름");
+                transform.position = new Vector3(raycastHit.transform.position.x, transform.position.y,
+                    raycastHit.transform.position.z);
+            }
         }
-        if (isAttackMode)
-        {
-            MuzzleRotate();
-            TurretRotate();
-            Shooting();
-        }
-        else
-        {
-            PlayerMove();
-        }
+        PlayerMove();
     }
 
     private void PlayerMove()
