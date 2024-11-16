@@ -17,13 +17,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isAttackMode = false;
     
     [SerializeField] private Color pathColor = Color.red; // 경로 표시 색상
-    [SerializeField] private Color originalColor = Color.white; // 블럭의 원래 색상
+    private Color originalColor = Color.white; // 블럭의 원래 색상
     private List<Renderer> pathRenderers = new List<Renderer>(); // 경로 블록의 렌더러들
     private bool pathDrawn = false; // 경로 시각화 여부 플래그
     private List<Vector3> currentPath = new List<Vector3>(); // 현재 경로 저장 리스트
     [SerializeField] private LayerMask layerMask;
-
     [SerializeField] private float fuel;
+
+    private Collider[] colliders;
 
     public int playerX;
     public int playerY;
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private PlayerState _playerState;
     private void Start()
     {
+        colliders = new Collider[DataManager.Instance.datas.Stage[0].horizontal *
+                                 DataManager.Instance.datas.Stage[0].vertical];
         _playerState = PlayerState.Ready;
     }
   
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour
                 {
                     // 경로 따라 이동 및 색상 초기화
                     StartCoroutine(MoveAlongPath(currentPath));
-                    ResetPathColors();
+                    // ResetPathColors();
                     pathDrawn = false;
                 }
             }
@@ -90,10 +93,10 @@ public class PlayerController : MonoBehaviour
 
     private void HighlightBlockAtPosition(Vector3 position)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, 0.1f,layerMask); // 해당 위치에 있는 블록 찾기
-        foreach (Collider collider in colliders)
+        int collidersCount = Physics.OverlapSphereNonAlloc(position, 0.1f,colliders,layerMask); // 해당 위치에 있는 블록 찾기
+        for (int i = 0; i < collidersCount; i++)
         {
-            Renderer renderer = collider.GetComponent<Renderer>();
+            Renderer renderer = colliders[i].GetComponent<Renderer>();
             if (renderer != null)
             {
                 if (!pathRenderers.Contains(renderer))
@@ -218,11 +221,14 @@ public class PlayerController : MonoBehaviour
                 Back();
             }
 
+            pathRenderers[0].material.color = originalColor;
+            Renderer renderer = pathRenderers[0];
+            pathRenderers.Remove(renderer);
             fuel -= 1;
             yield return new WaitForSeconds(moveDelay);
         }
-
         fuel = 5;
+        ResetPathColors();
     }
 
 
