@@ -16,6 +16,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveDelay;
     [SerializeField] private bool isAttackMode = false;
     
+    [SerializeField] private Color pathColor = Color.red; // 경로 표시 색상
+    [SerializeField] private Color originalColor = Color.white; // 블럭의 원래 색상
+    private List<Renderer> pathRenderers = new List<Renderer>(); // 경로 블록의 렌더러들
+    private bool pathDrawn = false; // 경로 시각화 여부 플래그
+    private List<Vector3> currentPath = new List<Vector3>(); // 현재 경로 저장 리스트
+    [SerializeField] private LayerMask layerMask;
+
+    [SerializeField] private float fuel;
 
     public int playerX;
     public int playerY;
@@ -33,22 +41,88 @@ public class PlayerController : MonoBehaviour
     {
         _playerState = PlayerState.Ready;
     }
+  
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // 좌클릭
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
-            if (Physics.Raycast(raycast,out raycastHit))
+            if (Physics.Raycast(raycast, out raycastHit))
             {
-                // Debug.Log($"{raycastHit.collider.name} 클릭한 오브젝트 이름");
-                Vector3 targetPos = new Vector3(raycastHit.transform.position.x,transform.position.y,raycastHit.transform.position.z);
-                List<Vector3> path = FindPath(transform.position, targetPos);
-                if (path.Count > 0)
+                Vector3 targetPos = new Vector3(raycastHit.transform.position.x, transform.position.y, raycastHit.transform.position.z);
+
+                if (!pathDrawn)
                 {
-                    StartCoroutine(MoveAlongPath(path));
+                    // 경로 계산 및 시각화
+                    currentPath = FindPath(transform.position, targetPos);
+                    if (currentPath.Count > 0)
+                    {
+                        HighlightPath(currentPath);
+                        pathDrawn = true;
+                    }
+                }
+                else
+                {
+                    // 경로 따라 이동 및 색상 초기화
+                    StartCoroutine(MoveAlongPath(currentPath));
+                    ResetPathColors();
+                    pathDrawn = false;
                 }
             }
+        }
+        else if (Input.GetMouseButtonDown(1)) // 우클릭
+        {
+            CancelPath();
+        }
+    }
+    private void HighlightPath(List<Vector3> path)
+    {
+        // 현재 위치도 경로 색상으로 변경
+        Vector3 currentPosition = transform.position;
+        HighlightBlockAtPosition(currentPosition);
+
+        foreach (Vector3 position in path)
+        {
+            HighlightBlockAtPosition(position);
+        }
+    }
+
+    private void HighlightBlockAtPosition(Vector3 position)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, 0.1f,layerMask); // 해당 위치에 있는 블록 찾기
+        foreach (Collider collider in colliders)
+        {
+            Renderer renderer = collider.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                if (!pathRenderers.Contains(renderer))
+                {
+                    pathRenderers.Add(renderer);
+                    renderer.material.color = pathColor; // 블록의 색상을 변경
+                }
+            }
+        }
+    }
+    private void ResetPathColors()
+    {
+        foreach (Renderer renderer in pathRenderers)
+        {
+            if (renderer != null)
+            {
+                renderer.material.color = originalColor; // 원래 색상으로 복구
+            }
+        }
+        pathRenderers.Clear(); // 리스트 초기화
+    }
+
+    private void CancelPath()
+    {
+        if (pathDrawn)
+        {
+            ResetPathColors();
+            pathDrawn = false;
+            currentPath.Clear(); // 경로 데이터 초기화
         }
     }
 
@@ -123,6 +197,10 @@ public class PlayerController : MonoBehaviour
     {
         foreach (Vector3 step in path)
         {
+            if (fuel < 1)
+            {
+                break;
+            }
             if (step.x > transform.position.x)
             {
                 Right();
@@ -139,8 +217,12 @@ public class PlayerController : MonoBehaviour
             {
                 Back();
             }
+
+            fuel -= 1;
             yield return new WaitForSeconds(moveDelay);
         }
+
+        fuel = 5;
     }
 
 

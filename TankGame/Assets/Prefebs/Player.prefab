@@ -508,8 +508,16 @@ MonoBehaviour:
   turret: {fileID: 5759149972328997567}
   bulletFactory: {fileID: 4606503021664347322, guid: fbdf0b590e5324054a397468a1d85f2a, type: 3}
   shootingPoint: {fileID: 2668046741124652561}
-  distance: 2
-  moveSpeed: 5
+  moveDelay: 0.1
+  isAttackMode: 0
+  pathColor: {r: 1, g: 0, b: 0, a: 1}
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  fuel: 5
+  playerX: 0
+  playerY: 0
 --- !u!1 &5759149972328997567
 GameObject:
   m_ObjectHideFlags: 0
