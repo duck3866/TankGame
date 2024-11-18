@@ -4,19 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerRotate : MonoBehaviour
+public class PlayerAttack : IState<PlayerController>
 {
     [SerializeField] private GameObject muzzle;
     [SerializeField] private GameObject turret;
     [SerializeField] private GameObject bulletFactory;
     [SerializeField] private GameObject shootingPoint;
-
-    private void Update()
+    private PlayerController _playerController;
+    public void OperateEnter(PlayerController _player)
     {
-        TurretRotate();
-        MuzzleRotate();
+        _playerController = _player;
     }
 
+    public void OperateUpdate(PlayerController _player)
+    {
+        // TurretRotate();
+        // MuzzleRotate();  
+        Shooting();
+    }
+
+    public void OperateExit(PlayerController _player)
+    {
+        Debug.Log("공격 -> 무브");
+    }
     private void Shooting()
     {
         if (Input.GetMouseButtonDown(0))
@@ -25,12 +35,14 @@ public class PlayerRotate : MonoBehaviour
             {
                 return;
             }
-
-            GameObject bullet = Instantiate(bulletFactory);
-            bullet.transform.position = shootingPoint.transform.position;
-            Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
-            rigidbody.AddForce(muzzle.transform.forward * 5f, ForceMode.Impulse);
+            _playerController.ChangeState(PlayerController.PlayerState.Move);
         }
+        //
+        //     GameObject bullet = Instantiate(bulletFactory);
+        //     bullet.transform.position = shootingPoint.transform.position;
+        //     Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
+        //     rigidbody.AddForce(muzzle.transform.forward * 5f, ForceMode.Impulse);
+        // }
     }
     private void TurretRotate()
     {

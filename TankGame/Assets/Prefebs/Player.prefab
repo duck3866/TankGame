@@ -504,13 +504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0663f9276d6d143c9ab337a49556ee50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDelay: 0.1
   isAttackMode: 0
-  pathColor: {r: 1, g: 0, b: 0, a: 1}
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  fuel: 0
   maxFuel: 10
   playerX: 0
   playerY: 0
