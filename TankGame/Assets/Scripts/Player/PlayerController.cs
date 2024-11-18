@@ -13,13 +13,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveDelay;
     [SerializeField] private bool isAttackMode = false;
     
-    [SerializeField] private Color pathColor = Color.red; // 경로 표시 색상
-    private Color originalColor = Color.white; // 블럭의 원래 색상
+    
     private List<Renderer> pathRenderers = new List<Renderer>(); // 경로 블록의 렌더러들
     private bool pathDrawn = false; // 경로 시각화 여부 플래그
     private List<Vector3> currentPath = new List<Vector3>(); // 현재 경로 저장 리스트
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float fuel;
+    [SerializeField] private float maxFuel;
+    private float hap;
 
     private Collider[] colliders;
 
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private PlayerState _playerState;
     private void Start()
     {
+        fuel = maxFuel;
         colliders = new Collider[DataManager.Instance.datas.Stage[0].horizontal *
                                  DataManager.Instance.datas.Stage[0].vertical];
         _playerState = PlayerState.Ready;
@@ -81,10 +83,14 @@ public class PlayerController : MonoBehaviour
         // 현재 위치도 경로 색상으로 변경
         Vector3 currentPosition = transform.position;
         HighlightBlockAtPosition(currentPosition);
-
         foreach (Vector3 position in path)
         {
+            if (hap >= fuel)
+            {
+                return;
+            }
             HighlightBlockAtPosition(position);
+            hap++;
         }
     }
 
@@ -99,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 if (!pathRenderers.Contains(renderer))
                 {
                     pathRenderers.Add(renderer);
-                    renderer.material.color = pathColor; // 블록의 색상을 변경
+                    renderer.material.color = Color.blue; // 블록의 색상을 변경
                 }
             }
         }
@@ -110,7 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             if (renderer != null)
             {
-                renderer.material.color = originalColor; // 원래 색상으로 복구
+                renderer.material.color = Color.white; // 원래 색상으로 복구
             }
         }
         pathRenderers.Clear(); // 리스트 초기화
@@ -222,13 +228,14 @@ public class PlayerController : MonoBehaviour
                 PlayerMoving(Vector3.back);
             }
 
-            pathRenderers[0].material.color = originalColor;
+            pathRenderers[0].material.color = Color.white;
             Renderer renderer = pathRenderers[0];
             pathRenderers.Remove(renderer);
             fuel -= 1;
+            hap = 0;
             yield return new WaitForSeconds(moveDelay);
         }
-        fuel = 5;
+        fuel = maxFuel;
         ResetPathColors();
     }
     private void PlayerMoving(Vector3 dir)

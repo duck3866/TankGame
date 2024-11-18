@@ -464,8 +464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8892269663881342851}
-  - component: {fileID: 4783479280604022410}
-  - component: {fileID: 2345437876767597883}
+  - component: {fileID: 4061613790117743944}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -493,7 +492,7 @@ Transform:
   - {fileID: 1972401560353180893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4783479280604022410
+--- !u!114 &4061613790117743944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,25 +510,10 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  fuel: 5
+  fuel: 0
+  maxFuel: 10
   playerX: 0
   playerY: 0
---- !u!114 &2345437876767597883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5444145848116010292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66435b80e681f470fa83cb5128b874b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  muzzle: {fileID: 7372212364965099882}
-  turret: {fileID: 5759149972328997567}
-  bulletFactory: {fileID: 4606503021664347322, guid: fbdf0b590e5324054a397468a1d85f2a, type: 3}
-  shootingPoint: {fileID: 2668046741124652561}
 --- !u!1 &5759149972328997567
 GameObject:
   m_ObjectHideFlags: 0
