@@ -18,7 +18,9 @@ public class PlayerController : MonoBehaviour
     public GameObject turret;
     public GameObject bulletFactory;
     public GameObject shootingPoint;
-    
+
+    public Projectile Projectile; 
+        
     public int playerX;
     public int playerY;
 
