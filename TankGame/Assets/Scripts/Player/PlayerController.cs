@@ -9,10 +9,16 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private bool isAttackMode = false;
+    public LineRenderer lineRenderer;
+    public bool isAttackMode = false;
     public LayerMask layerMask;
     public float maxFuel;
 
+    public GameObject muzzle;
+    public GameObject turret;
+    public GameObject bulletFactory;
+    public GameObject shootingPoint;
+    
     public int playerX;
     public int playerY;
 
@@ -27,6 +33,7 @@ public class PlayerController : MonoBehaviour
         new Dictionary<PlayerState, IState<PlayerController>>();
     private void Start()
     {
+        lineRenderer = GetComponent<LineRenderer>();
         IState<PlayerController> Move = new PlayerMove();
         IState<PlayerController> Attack = new PlayerAttack();
         _dicState.Add(PlayerState.Move,Move);
