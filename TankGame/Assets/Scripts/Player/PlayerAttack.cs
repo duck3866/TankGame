@@ -6,16 +6,20 @@ using UnityEngine.EventSystems;
 
 public class PlayerAttack : IState<PlayerController>
 {
+    private int lineSegments = 60;
+    private float timeOfTheFlight = 5;
+    
     private PlayerController _playerController;
     public void OperateEnter(PlayerController _player)
     {
         _playerController = _player;
+        _playerController.lineRenderer.enabled = true;
     }
 
     public void OperateUpdate(PlayerController _player)
     {
         GameObject currentObject = _playerController.shootingPoint;
-        _playerController.Projectile.ShowTrajectoryLine(currentObject.transform.position, currentObject.transform.forward * 6f);
+        ShowTrajectoryLine(currentObject.transform.position, currentObject.transform.forward * 6f);
         TurretRotate();
         MuzzleRotate();
         Shooting();
@@ -23,6 +27,8 @@ public class PlayerAttack : IState<PlayerController>
 
     public void OperateExit(PlayerController _player)
     {
+        _playerController.lineRenderer.positionCount = 0;
+        _playerController.lineRenderer.enabled = false;
         Debug.Log("공격 -> 무브");
     }
     private void Shooting()
@@ -33,6 +39,12 @@ public class PlayerAttack : IState<PlayerController>
             {
                 return;
             }
+            GameObject currentObject = _playerController.shootingPoint;
+            
+            GameObject bullet = BulletManager.Instace.GetObject();
+            bullet.transform.position = _playerController.shootingPoint.transform.position;
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            bulletRigidbody.AddForce(currentObject.transform.forward * 8f,ForceMode.Impulse);
             _playerController.ChangeState(PlayerController.PlayerState.Move);
         }
     }
@@ -57,5 +69,48 @@ public class PlayerAttack : IState<PlayerController>
             currentXRotation += 360;
         }
         _playerController.muzzle.transform.localEulerAngles = new Vector3(currentXRotation, 0, 0);
+    }
+    public void ShowTrajectoryLine(Vector3 startPoint, Vector3 startVelocity)
+    {
+        float timeStep = timeOfTheFlight / lineSegments;
+
+        Vector3[] lineRendererPoints = CalculateTrajectoryLine(startPoint, startVelocity, timeStep);
+
+        _playerController.lineRenderer.positionCount = lineSegments;
+        _playerController.lineRenderer.SetPositions(lineRendererPoints);
+    }
+    private Vector3[] CalculateTrajectoryLine(Vector3 startPoint, Vector3 startVelocity, float timeStep)
+    {
+        Vector3[] lineRendererPoints = new Vector3[lineSegments];
+        lineRendererPoints[0] = startPoint;
+        
+        for (int i = 1; i < lineSegments; i++)
+        {
+            Vector3 progressBeforeGravity = startVelocity * timeStep;
+            Vector3 gravityOffset = Vector3.up * -0.5f * Physics.gravity.y * timeStep * timeStep;
+            Vector3 nextPosition = startPoint + progressBeforeGravity - gravityOffset;
+            //----------------
+            Vector3 direction = (nextPosition - startPoint).normalized;
+            float distance = Vector3.Distance(startPoint, nextPosition);
+        
+            RaycastHit raycastHit;
+            if (Physics.Raycast(startPoint, direction, out raycastHit, distance))
+            {
+                if (raycastHit.collider.CompareTag("Block"))
+                {
+                    lineRendererPoints[i] = raycastHit.point;
+                    for (int j = i + 1; j < lineSegments; j++)
+                    {
+                        lineRendererPoints[j] = raycastHit.point;
+                    }
+                    break;
+                }
+            }
+            lineRendererPoints[i] = nextPosition;
+            startPoint = nextPosition;
+            startVelocity += Physics.gravity * timeStep;
+        }
+
+        return lineRendererPoints;
     }
 }

@@ -465,7 +465,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8892269663881342851}
   - component: {fileID: 5152415365072601706}
-  - component: {fileID: -1809363872023196255}
   - component: {fileID: 1368656094967769541}
   m_Layer: 0
   m_Name: Player
@@ -506,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0663f9276d6d143c9ab337a49556ee50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 1368656094967769541}
   isAttackMode: 0
   layerMask:
     serializedVersion: 2
@@ -516,24 +515,8 @@ MonoBehaviour:
   turret: {fileID: 5759149972328997567}
   bulletFactory: {fileID: 4606503021664347322, guid: fbdf0b590e5324054a397468a1d85f2a, type: 3}
   shootingPoint: {fileID: 2668046741124652561}
-  Projectile: {fileID: -1809363872023196255}
   playerX: 0
   playerY: 0
---- !u!114 &-1809363872023196255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5444145848116010292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b343f944d8dae4ef7b80d99e2aa414b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 1368656094967769541}
-  lineSegments: 60
-  timeOfTheFlight: 5
 --- !u!120 &1368656094967769541
 LineRenderer:
   serializedVersion: 2

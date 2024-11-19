@@ -16,13 +16,12 @@ public class PlayerController : MonoBehaviour
 
     public GameObject muzzle;
     public GameObject turret;
-    public GameObject bulletFactory;
+    
     public GameObject shootingPoint;
-
-    public Projectile Projectile; 
+    
         
-    public int playerX;
-    public int playerY;
+    [HideInInspector] public int playerX;
+    [HideInInspector] public int playerY;
 
     public enum PlayerState
     {
