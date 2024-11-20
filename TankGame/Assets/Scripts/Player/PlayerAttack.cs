@@ -44,7 +44,7 @@ public class PlayerAttack : IState<PlayerController>
             GameObject bullet = BulletManager.Instace.GetObject();
             bullet.transform.position = _playerController.shootingPoint.transform.position;
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            bulletRigidbody.AddForce(currentObject.transform.forward * 8f,ForceMode.Impulse);
+            bulletRigidbody.AddForce(currentObject.transform.forward * 9f,ForceMode.Impulse);
             _playerController.ChangeState(PlayerController.PlayerState.Move);
         }
     }
@@ -98,11 +98,11 @@ public class PlayerAttack : IState<PlayerController>
             {
                 if (raycastHit.collider.CompareTag("Block"))
                 {
-                    lineRendererPoints[i] = raycastHit.point;
-                    for (int j = i + 1; j < lineSegments; j++)
-                    {
-                        lineRendererPoints[j] = raycastHit.point;
-                    }
+                    lineRendererPoints[i] = new Vector3(raycastHit.point.x,0,raycastHit.point.z);
+                    // for (int j = i + 1; j < lineSegments; j++)
+                    // {
+                    //     lineRendererPoints[j] = raycastHit.point;
+                    // }
                     break;
                 }
             }
