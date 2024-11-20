@@ -5,41 +5,40 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private GameObject Bomb;
-    private GameObject efx;
+    [SerializeField] private GameObject bomb;
+    private GameObject _efx;
     private ParticleSystem _particleSystem;
     public LayerMask targerMask;
-    private Collider[] colliders;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position,0.5f);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Block") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Block"))
         {
-            efx = Instantiate(Bomb);
-            _particleSystem = efx.GetComponent<ParticleSystem>();
-            efx.transform.position = transform.position;
+            _efx = Instantiate(bomb);
+            _particleSystem = _efx.GetComponent<ParticleSystem>();
+            _efx.transform.position = transform.position;
             _particleSystem.Play();
-            if (other.gameObject.CompareTag("Player"))
-            {
-                IDamagable damagable = other.gameObject.GetComponent<IDamagable>();
-                damagable.TakeDamage(1);
-            }
+            PerformAttack();
             gameObject.SetActive(false);
         }
     }
-    //
-    // private void PerformAttack()
-    // {
-    //     Collider[] colliders = Physics.OverlapSphere(transform.position, 2f, targerMask);
-    //     Debug.Log("dsdsdsd");
-    //     foreach (var hitCollider in colliders)
-    //     {
-    //         Debug.Log("dfggg");
-    //         if (hitCollider != null && hitCollider.TryGetComponent<IDamagable>(out var target))
-    //         {
-    //             Debug.Log("123425");
-    //             target.TakeDamage(1);
-    //             Debug.Log($"공격 성공: {hitCollider.name}");
-    //         }
-    //     }
-    // }
+    
+    private void PerformAttack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f,targerMask);
+        foreach (var hitCollider in colliders)
+        {
+            if (hitCollider != null && hitCollider.TryGetComponent<IDamagable>(out var target))
+            {
+                target.TakeDamage(1);
+                Debug.Log($"공격 성공: {hitCollider.name}");
+            }
+        }
+    }
 }
