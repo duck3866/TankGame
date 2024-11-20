@@ -58,7 +58,6 @@ public class PlayerMove : IState<PlayerController>
                 }
                 else
                 {
-                    // 경로 따라 이동 및 색상 초기화
                     _playerController.StartCoroutine(MoveAlongPath(_currentPath));
                     // ResetPathColors();
                     _pathDrawn = false;

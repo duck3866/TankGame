@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 8892269663881342851}
   - component: {fileID: 5152415365072601706}
   - component: {fileID: 1368656094967769541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -509,12 +509,13 @@ MonoBehaviour:
   isAttackMode: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
   maxFuel: 10
   muzzle: {fileID: 7372212364965099882}
   turret: {fileID: 5759149972328997567}
-  bulletFactory: {fileID: 4606503021664347322, guid: fbdf0b590e5324054a397468a1d85f2a, type: 3}
   shootingPoint: {fileID: 2668046741124652561}
+  playerHp: 5
+  playerTurn: 0
   playerX: 0
   playerY: 0
 --- !u!120 &1368656094967769541

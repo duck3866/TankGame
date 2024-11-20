@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour,IDamagable
     {
         if (playerHp > 1)
         {
-            playerHp -= hitPower;    
+            playerHp -= hitPower; 
+            UIManager.Instance.CheckImage();
         }
         else
         {
