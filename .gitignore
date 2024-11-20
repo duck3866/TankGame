@@ -10,12 +10,6 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
-# Unity3D Engine
-/[Ee]ngine/
-/[Ee]ditor/
-/[Pp]ackages/
-/[Pp]rojectSettings/
-
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -76,30 +70,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# Unity Cache
-/[Ll]ibrary/[Aa]rtifactDB
-/[Ll]ibrary/[Ss]haderCache/
-/[Ll]ibrary/[Mm]etadata/
-/[Ll]ibrary/[Ss]criptAssemblies/
-/[Ll]ibrary/[Pp]ackageCache/
-/[Ll]ibrary/[Bb]uildSettings.asset
-/[Ll]ibrary/[Ee]ditorUserBuildSettings.asset
-/[Ll]ibrary/[Ll]astSceneManagerSetup.txt
-/[Ll]ibrary/[Aa]ssetImportState
-/[Ll]ibrary/[Aa]ssetDatabase3
-/[Ll]ibrary/[Aa]ssetVersioning.db
-/[Ll]ibrary/[Ss]tateCache/
-
-# Unity Generated
-/[Ll]ibrary/expandedItems
-/[Ll]ibrary/ArtifactDB
-/[Ll]ibrary/SourceAssetDB
-/[Ll]ibrary/LibraryFormatVersion.txt
-/[Ll]ibrary/ScriptAssemblies
-/[Ll]ibrary/ScriptMapper
-/[Ll]ibrary/ShaderCache
-/[Ll]ibrary/TempArtifacts
-/[Ll]ibrary/metadata
-/[Ll]ibrary/previews
-/[Ll]ibrary/guidmapper
