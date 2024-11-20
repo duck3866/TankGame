@@ -29,6 +29,9 @@ public class PlayerAttack : IState<PlayerController>
     {
         _playerController.lineRenderer.positionCount = 0;
         _playerController.lineRenderer.enabled = false;
+        
+        _playerController.playerTurn++;
+        UIManager.Instance.CheckPlayerTurn();
         Debug.Log("공격 -> 무브");
     }
     private void Shooting()

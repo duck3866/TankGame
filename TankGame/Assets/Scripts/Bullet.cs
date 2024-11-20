@@ -8,7 +8,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject Bomb;
     private GameObject efx;
     private ParticleSystem _particleSystem;
-
+    public LayerMask targerMask;
+    private Collider[] colliders;
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Block"))
@@ -17,6 +18,7 @@ public class Bullet : MonoBehaviour
             _particleSystem = efx.GetComponent<ParticleSystem>();
             efx.transform.position = transform.position;
             _particleSystem.Play();
+            
             gameObject.SetActive(false);
         }
     }

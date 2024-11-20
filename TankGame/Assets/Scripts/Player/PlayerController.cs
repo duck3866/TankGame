@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour,IDamagable
 {
     public LineRenderer lineRenderer;
     public bool isAttackMode = false;
@@ -18,8 +18,10 @@ public class PlayerController : MonoBehaviour
     public GameObject turret;
     
     public GameObject shootingPoint;
+
+    public int playerHp = 5;
+    public int playerTurn = 0;
     
-        
     [HideInInspector] public int playerX;
     [HideInInspector] public int playerY;
 
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour
         new Dictionary<PlayerState, IState<PlayerController>>();
     private void Start()
     {
+        playerHp = 5;
+        playerTurn = 0;
         lineRenderer = GetComponent<LineRenderer>();
         IState<PlayerController> Move = new PlayerMove();
         IState<PlayerController> Attack = new PlayerAttack();
@@ -51,6 +55,19 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         _currentState?.OperateUpdate(this);
+    }
+
+    public void TakeDamage(int hitPower)
+    {
+        if (playerHp > 1)
+        {
+            playerHp -= hitPower;    
+        }
+        else
+        {
+            UIManager.Instance.DiePanel();
+        }
+        
     }
 }
 
