@@ -63,9 +63,12 @@ public class UIManager : MonoBehaviour
 
     public void Initialized()
     {
-        TurnTextChange();
-        CheckPlayerTurn();
-        CheckImage();
+        if (_playerController != null)
+        {
+            TurnTextChange();
+            CheckPlayerTurn();
+            CheckImage();   
+        }
     }
 
     public void GameClearPanel()
