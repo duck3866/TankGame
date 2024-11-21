@@ -9,11 +9,12 @@ public class UIManager : MonoBehaviour
 {
     private GameObject player;
     private PlayerController _playerController;
-    
+    [SerializeField] private TextMeshProUGUI clearTurnText;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] private Image[] images;
     [SerializeField] private GameObject diePanel;
-    
+    public GameObject clearPanel;
+    [SerializeField] private TextMeshProUGUI nowTurn;
     public static UIManager Instance = null;
 
     private void Awake()
@@ -40,6 +41,11 @@ public class UIManager : MonoBehaviour
     {
         textMeshProUGUI.text = "현재 턴 수 : " + _playerController.playerTurn;
     }
+
+    public void TurnTextChange()
+    {
+        nowTurn.text = GameManager.Instance.nowTurn;
+    }
     public void CheckImage()
     { 
         for (int i = 1; i <= images.Length; i++)
@@ -55,6 +61,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void Initialized()
+    {
+        TurnTextChange();
+        CheckPlayerTurn();
+        CheckImage();
+    }
+
+    public void GameClearPanel()
+    {
+        clearTurnText.text = "턴 수 :"+_playerController.playerTurn;
+        player.SetActive(false);
+        clearPanel.SetActive(true);
+    }
     public void DiePanel()
     {
         diePanel.SetActive(true);

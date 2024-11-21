@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour,IDamagable
         _dicState.Add(PlayerState.Move,Move);
         _dicState.Add(PlayerState.Attack,Attack);
         ChangeState(PlayerState.Move);
-        GameManager.Instance.TurnChange("Player");
+
+        isPlayerTurn = true;
     }
     public void ChangeState(PlayerState newState)
     {
@@ -72,7 +73,15 @@ public class PlayerController : MonoBehaviour,IDamagable
             UIManager.Instance.DiePanel();
             gameObject.SetActive(false);
         }
-        
+    }
+
+    private void OnEnable()
+    {
+        maxFuel = 10;
+        playerHp = 5;
+        playerTurn = 0;
+        isPlayerTurn = true;
+        UIManager.Instance.Initialized();
     }
 }
 

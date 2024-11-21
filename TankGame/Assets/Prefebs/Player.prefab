@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 1368656094967769541}
-  isAttackMode: 0
+  isPlayerTurn: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -642,8 +642,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10.000001, y: 10.000001, z: 20.000002}
-  m_Center: {x: 0, y: -6.700001, z: 5.0000005}
+  m_Size: {x: 10, y: 5, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5759149972328997567
 GameObject:
   m_ObjectHideFlags: 0

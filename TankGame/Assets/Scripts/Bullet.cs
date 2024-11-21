@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Block"))
+        if (other.gameObject.CompareTag("Block") || other.gameObject.CompareTag("Enemy"))
         {
             _efx = Instantiate(bomb);
             _particleSystem = _efx.GetComponent<ParticleSystem>();

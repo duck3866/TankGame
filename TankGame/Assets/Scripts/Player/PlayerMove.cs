@@ -234,10 +234,6 @@ public class PlayerMove : IState<PlayerController>
                 PlayerMoving(Vector3.back);
             }
             MapManager.Instace.MapList[_playerController.playerX, _playerController.playerY] = 1;
-            foreach (var VARIABLE in MapManager.Instace.MapList)
-            {
-                Debug.Log(VARIABLE);
-            }
             _pathRenderers[0].material.color = Color.white;
             Renderer renderer = _pathRenderers[0];
             _pathRenderers.Remove(renderer);

@@ -10,8 +10,13 @@ public class MapManager : MonoBehaviour
     public GameObject block;
     public Transform parent;
 
-    public GameObject player;
+    public GameObject playerFactory;
+    [HideInInspector] public GameObject player;
     private PlayerController _playerController;
+    public GameObject enemy;
+    private EnemyController _enemyController;
+
+    public List<GameObject> enemyList = new List<GameObject>(); 
     
     [SerializeField] private int poolSize;
     private GameObject[] _objectList;
@@ -31,9 +36,13 @@ public class MapManager : MonoBehaviour
         {
             Instace = this;
         }
-        player = Instantiate(player);
+        player = Instantiate(playerFactory);
         _playerController = player.GetComponent<PlayerController>();
         player.transform.position = new Vector3(-5, 10, 5);
+        
+        enemy = Instantiate(enemy);
+        _enemyController = enemy.GetComponent<EnemyController>();
+        enemy.transform.position = new Vector3(-5, 10, 5);
     }
 
     private void Start()
@@ -85,12 +94,14 @@ public class MapManager : MonoBehaviour
 
     public void OnClickPlus()
     {
+        UIManager.Instance.clearPanel.SetActive(false);
         mapIndex++;
         ResetList();
         ChangeMap(mapIndex);
     }
     public void OnClickMinus()
     {
+        UIManager.Instance.clearPanel.SetActive(false);
         mapIndex--;
         ResetList();
         ChangeMap(mapIndex);
@@ -112,18 +123,47 @@ public class MapManager : MonoBehaviour
                 yield return new WaitForSeconds(blockDelay);
             }
         }
-        int playerX = DataManager.Instance.datas.Stage[value].x;
-        int playerY = DataManager.Instance.datas.Stage[value].y;
+        int playerX = DataManager.Instance.datas.Stage[value].playerX;
+        int playerY = DataManager.Instance.datas.Stage[value].playerY;
         // MapList[playerX, playerY] = 1;
         _playerController.playerX = playerX;
         _playerController.playerY = playerY;
         
         player.SetActive(true);
         player.transform.position = new Vector3(playerX, 0.55f, playerY);
+
+        int enemyX = DataManager.Instance.datas.Stage[value].enemyX;
+        int enemyY = DataManager.Instance.datas.Stage[value].enemyY;
+        
+        enemy.SetActive(true);
+        enemyList.Add(enemy);
+        _enemyController.enemyX = enemyX;
+        _enemyController.enemyY = enemyY;
+        enemy.transform.position = new Vector3(enemyX,0.55f,enemyY);
         
         yield return null;
     }
 
+    public void EnemyDieCheck()//(1 die) (2 die) (3)
+    {
+        bool isClear = false;
+        foreach (var die in enemyList)
+        {
+            if (die.activeSelf)
+            {
+                isClear = false;
+                break;
+            }
+            else
+            {
+                isClear = true;
+            }
+        }
+        if (isClear)
+        {
+            UIManager.Instance.GameClearPanel();
+        }
+    }
     private IEnumerator DropBlock(GameObject obj, Vector3 startPos, Vector3 endPos)
     {
         float elapsed = 0f;

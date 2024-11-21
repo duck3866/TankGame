@@ -32,7 +32,7 @@ public class PlayerAttack : IState<PlayerController>
         
         _playerController.playerTurn++;
         UIManager.Instance.CheckPlayerTurn();
-        _playerController.isPlayerTurn = false;
+        GameManager.Instance.TurnChange("Enemy");
     }
     private void Shooting()
     {

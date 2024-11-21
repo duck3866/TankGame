@@ -37,6 +37,8 @@ public class MapData
     public string name;
     public int horizontal;
     public int vertical;
-    public int x;
-    public int y;
+    public int playerX;
+    public int playerY;
+    public int enemyX;
+    public int enemyY;
 }
