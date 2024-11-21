@@ -105,7 +105,7 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < y; j++)
             {
-                MapList[i, j] = i+j;
+                MapList[i, j] = 0;
                 GameObject obj = GetObject();
                 StartCoroutine(DropBlock(obj, new Vector3(i, dropHeight, j), new Vector3(i, 0, j)));
                 obj.name = i + "/" + j; 

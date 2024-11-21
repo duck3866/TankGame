@@ -32,7 +32,7 @@ public class PlayerAttack : IState<PlayerController>
         
         _playerController.playerTurn++;
         UIManager.Instance.CheckPlayerTurn();
-        Debug.Log("공격 -> 무브");
+        _playerController.isPlayerTurn = false;
     }
     private void Shooting()
     {

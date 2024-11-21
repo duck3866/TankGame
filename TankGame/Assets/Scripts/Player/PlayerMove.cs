@@ -212,6 +212,7 @@ public class PlayerMove : IState<PlayerController>
                 break;
             }
 
+            MapManager.Instace.MapList[_playerController.playerX, _playerController.playerY] = 0;
             if (step.x > _playerController.transform.position.x)
             {
                 _playerController.playerX += 1;
@@ -232,7 +233,11 @@ public class PlayerMove : IState<PlayerController>
                 _playerController.playerY -= 1;
                 PlayerMoving(Vector3.back);
             }
-
+            MapManager.Instace.MapList[_playerController.playerX, _playerController.playerY] = 1;
+            foreach (var VARIABLE in MapManager.Instace.MapList)
+            {
+                Debug.Log(VARIABLE);
+            }
             _pathRenderers[0].material.color = Color.white;
             Renderer renderer = _pathRenderers[0];
             _pathRenderers.Remove(renderer);

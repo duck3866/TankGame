@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour,IDamagable
 {
     public LineRenderer lineRenderer;
-    public bool isAttackMode = false;
+    public bool isPlayerTurn = false;
     public LayerMask layerMask;
     public float maxFuel;
 
@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour,IDamagable
         IState<PlayerController> Attack = new PlayerAttack();
         _dicState.Add(PlayerState.Move,Move);
         _dicState.Add(PlayerState.Attack,Attack);
-        
         ChangeState(PlayerState.Move);
+        GameManager.Instance.TurnChange("Player");
     }
     public void ChangeState(PlayerState newState)
     {
@@ -54,12 +54,15 @@ public class PlayerController : MonoBehaviour,IDamagable
     }
     public void Update()
     {
-        _currentState?.OperateUpdate(this);
+        if (isPlayerTurn)
+        {
+            _currentState?.OperateUpdate(this);   
+        }
     }
 
     public void TakeDamage(int hitPower)
     {
-        if (playerHp > 1)
+        if (playerHp >= 1)
         {
             playerHp -= hitPower; 
             UIManager.Instance.CheckImage();
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         else
         {
             UIManager.Instance.DiePanel();
+            gameObject.SetActive(false);
         }
         
     }

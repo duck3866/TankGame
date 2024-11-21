@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     private PlayerController _playerController;
     
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameManager.Instance.player;
             if (player != null)
             {
                 _playerController = player.GetComponent<PlayerController>();
