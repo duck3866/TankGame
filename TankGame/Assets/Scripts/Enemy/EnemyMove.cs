@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class EnemyMove : IState<EnemyController>
@@ -9,13 +10,16 @@ public class EnemyMove : IState<EnemyController>
     
     private float _moveDelay = 0.1f;
     private List<Renderer> _pathRenderers = new List<Renderer>(); // 경로 블록의 렌더러들
-    private bool _pathDrawn = false; // 클릭했는지 체크
+    // private bool _pathDrawn = false; // 클릭했는지 체크
     private List<Vector3> _currentPath = new List<Vector3>(); // 현재 경로 저장 리스트
     private float _fuel;
 
     private float _weight;
     private bool _isInit = false;
+    
     private Collider[] _colliders;
+
+    private bool _isJug = false;
      private void Initialize()
     {
         _fuel = _enemyController.maxFuel;
@@ -26,46 +30,41 @@ public class EnemyMove : IState<EnemyController>
     public void OperateEnter(EnemyController _enemy)
     {
         _enemyController = _enemy;
+        _isJug = false;
         if (!_isInit)
         {
             _isInit = true;
             Initialize();
         }
+
+        
     }
 
     public void OperateUpdate(EnemyController _enemy)
     {
-        if (Input.GetMouseButtonDown(0)) // 좌클릭
+        if (_enemyController.isEnemyTurn && !_isJug)
         {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit))
+            Collider[] hitColliders = Physics.OverlapSphere(_enemyController._player.transform.position, 3f, _enemyController.layerMask);
+            if (hitColliders != null)
             {
-                Vector3 targetPos = new Vector3(raycastHit.transform.position.x, _enemyController.transform.position.y,
-                    raycastHit.transform.position.z);
-
-                if (!_pathDrawn)
+                int randomPos = Random.Range(0, hitColliders.Length - 1);
+                Debug.Log(hitColliders[randomPos].name);
+                Vector3 startPos = new Vector3(hitColliders[randomPos].transform.position.x,_enemyController.transform.position.y,hitColliders[randomPos].transform.position.z);
+                _currentPath = FindPath(_enemyController.transform.position, startPos);
+                if (_currentPath.Count > 0)
                 {
-                    // 경로 계산 및 시각화
-                    _currentPath = FindPath(_enemyController.transform.position, targetPos);
-                    if (_currentPath.Count > 0)
-                    {
-                        HighlightPath(_currentPath);
-                        _pathDrawn = true;
-                    }
-                }
-                else
-                {
-                    _enemyController.StartCoroutine(MoveAlongPath(_currentPath));
-                    // ResetPathColors();
-                    _pathDrawn = false;
+                    HighlightPath(_currentPath);
                 }
             }
+            _isJug = true;
+            _enemyController.StartCoroutine(WaitMove());
         }
-        else if (Input.GetMouseButtonDown(1)) // 우클릭
-        {
-            CancelPath();
-        }
+    }
+
+    private IEnumerator WaitMove()
+    {
+        yield return new WaitForSeconds(2f); 
+        _enemyController.StartCoroutine(MoveAlongPath(_currentPath));
     }
 
     public void OperateExit(EnemyController _enemy)
@@ -121,15 +120,15 @@ public class EnemyMove : IState<EnemyController>
         _pathRenderers.Clear(); // 리스트 초기화
     }
 
-    private void CancelPath()
-    {
-        if (_pathDrawn)
-        {
-            ResetPathColors();
-            _pathDrawn = false;
-            _currentPath.Clear(); // 경로 데이터 초기화
-        }
-    }
+    // private void CancelPath()
+    // {
+    //     if (_pathDrawn)
+    //     {
+    //         ResetPathColors();
+    //         _pathDrawn = false;
+    //         _currentPath.Clear(); // 경로 데이터 초기화
+    //     }
+    // }
 
     private List<Vector3> FindPath(Vector3 startPosition, Vector3 targetPosition)
     {
@@ -242,7 +241,9 @@ public class EnemyMove : IState<EnemyController>
         _fuel = _enemyController.maxFuel;
         _weight = 0;
         ResetPathColors();
-        _enemyController.ChangeState(EnemyController.EnemyState.Attack);
+        _enemyController.isJudgment = false;
+        GameManager.Instance.TurnChange("Player");
+        // _enemyController.ChangeState(EnemyController.EnemyState.Attack);
     }
 
     private void EnemyMoving(Vector3 dir)

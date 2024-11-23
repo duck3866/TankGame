@@ -15,7 +15,8 @@ public class EnemyAttack : IState<EnemyController>
         if (Input.GetKey(KeyCode.A))
         {
             Debug.Log("dsds");
-            _enemyController.ChangeState(EnemyController.EnemyState.Move);
+            _enemyController.isJudgment = false;
+            GameManager.Instance.TurnChange("Player");
         }
     }
 

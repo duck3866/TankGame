@@ -84,4 +84,10 @@ public class PlayerController : MonoBehaviour,IDamagable
         isPlayerTurn = true;
         UIManager.Instance.Initialized();
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position,3f);
+    }
 }
