@@ -5,58 +5,41 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour,IDamagable
 {
+    private GameObject _player;
     public bool isEnemyTurn = false;
     [SerializeField] private int enemyHp = 5;
     [HideInInspector] public int enemyX;
     [HideInInspector] public int enemyY;
- 
-
+    public LayerMask layerMask;
+    public float maxFuel;
+    
+    public enum EnemyState
+    {
+        Move,
+        Attack,
+        Idle
+    }
+    private IState<EnemyController> _currentState;
+    private Dictionary<EnemyState, IState<EnemyController>> _dicState =
+        new Dictionary<EnemyState, IState<EnemyController>>();
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+        enemyHp = 5;
+        IState<EnemyController> Move = new EnemyMove();
+        IState<EnemyController> Attack = new EnemyAttack();
+        _dicState.Add(EnemyState.Move,Move);
+        _dicState.Add(EnemyState.Attack,Attack);
+        ChangeState(EnemyState.Move);
+    }
     // Update is called once per frame
     void Update()
     {
         if (isEnemyTurn)
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                if (enemyX < MapManager.Instace.x - 1)
-                {
-                    enemyX += 1;
-                    PlayerMoving(Vector3.right);
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                if (enemyX > 0)
-                {
-                    enemyX -= 1;
-                    PlayerMoving(Vector3.left);
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                if (enemyY < MapManager.Instace.y - 1)
-                {
-                    enemyY += 1;
-                    PlayerMoving(Vector3.forward);
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                if (enemyY > 0)
-                {
-                    enemyY -= 1;
-                    PlayerMoving(Vector3.back);
-                }
-            }
+            _currentState?.OperateUpdate(this);    
         }
     }
-    private void PlayerMoving(Vector3 dir)
-    {
-        transform.position += dir * 1;
-        transform.forward = dir;
-        GameManager.Instance.TurnChange("Player");
-    }
-
     private void OnEnable()
     {
         enemyHp = 5;
@@ -78,5 +61,12 @@ public class EnemyController : MonoBehaviour,IDamagable
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public void ChangeState(EnemyState newState)
+    {
+        _currentState?.OperateExit(this);
+        _currentState = _dicState[newState];
+        _currentState.OperateEnter(this);
     }
 }

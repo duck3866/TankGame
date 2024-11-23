@@ -739,6 +739,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemyTurn: 0
+  enemyHp: 5
+  enemyX: 0
+  enemyY: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  maxFuel: 5
 --- !u!1 &7749964280356667261
 GameObject:
   m_ObjectHideFlags: 0
