@@ -13,6 +13,11 @@ public class EnemyController : MonoBehaviour,IDamagable
     public LayerMask layerMask;
     public float maxFuel;
 
+    public GameObject muzzle;
+    public GameObject turret;
+    
+    public GameObject shootingPoint;
+    
     public bool isJudgment = false;
     
     public enum EnemyState
@@ -46,6 +51,7 @@ public class EnemyController : MonoBehaviour,IDamagable
         {
             _player = GameObject.FindGameObjectWithTag("Player");
         }
+        Debug.Log(_currentState);
         if (isEnemyTurn)
         {
             _currentState?.OperateUpdate(this);    
@@ -54,6 +60,7 @@ public class EnemyController : MonoBehaviour,IDamagable
 
     private void StateJudgment()
     {
+        Debug.Log("다시 정합니다.");
         isJudgment = true;
         if (Vector3.Distance(_player.transform.position,transform.position) < 6f)
         {

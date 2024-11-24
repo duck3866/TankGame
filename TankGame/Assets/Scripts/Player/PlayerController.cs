@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour,IDamagable
 
     public GameObject muzzle;
     public GameObject turret;
-    
     public GameObject shootingPoint;
 
     public int playerHp = 5;
@@ -31,7 +30,8 @@ public class PlayerController : MonoBehaviour,IDamagable
         Attack,
         Idle
     }
-
+    
+    public AudioSource audioSource;
     private IState<PlayerController> _currentState;
     private Dictionary<PlayerState, IState<PlayerController>> _dicState =
         new Dictionary<PlayerState, IState<PlayerController>>();
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour,IDamagable
     {
         playerHp = 5;
         playerTurn = 0;
+        audioSource = GetComponent<AudioSource>();
         lineRenderer = GetComponent<LineRenderer>();
         IState<PlayerController> Move = new PlayerMove();
         IState<PlayerController> Attack = new PlayerAttack();

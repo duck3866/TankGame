@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     private GameObject _efx;
     private ParticleSystem _particleSystem;
     public LayerMask targerMask;
+    
 
     private void OnDrawGizmos()
     {

@@ -44,10 +44,18 @@ public class PlayerAttack : IState<PlayerController>
             }
             GameObject currentObject = _playerController.shootingPoint;
             
+            _playerController.audioSource.Play();
+            
             GameObject bullet = BulletManager.Instace.GetObject();
-            bullet.transform.position = _playerController.shootingPoint.transform.position;
+            bullet.transform.position = currentObject.transform.position;
+            
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            bulletRigidbody.AddForce(currentObject.transform.forward * 9f,ForceMode.Impulse);
+            
+            Transform shootPoint = _playerController.shootingPoint.transform;
+            Vector3 shootDirection = shootPoint.forward.normalized; // 방향 벡터 정규화
+
+            bulletRigidbody.velocity = Vector3.zero; // 기존 속도 초기화
+            bulletRigidbody.AddForce(shootDirection * 9f, ForceMode.Impulse);
             _playerController.ChangeState(PlayerController.PlayerState.Move);
         }
     }
