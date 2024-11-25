@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour,IDamagable
 {
+    [SerializeField] private Image[] images;
     public GameObject _player;
     public bool isEnemyTurn = false;
     [SerializeField] private int enemyHp = 5;
@@ -40,6 +42,7 @@ public class EnemyController : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
+        CheckImage();
         if (_player != null)
         {
             if (!isJudgment)
@@ -56,7 +59,20 @@ public class EnemyController : MonoBehaviour,IDamagable
             _currentState?.OperateUpdate(this);    
         }
     }
-
+    public void CheckImage()
+    { 
+        for (int i = 1; i <= images.Length; i++)
+        {
+            if (enemyHp < i)
+            {
+                images[i-1].color = Color.white;
+            }
+            else
+            {
+                images[i-1].color = Color.red;
+            }
+        }
+    }
     private void StateJudgment()
     {
         isJudgment = true;

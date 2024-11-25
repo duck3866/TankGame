@@ -53,11 +53,11 @@ public class UIManager : MonoBehaviour
         {
             if (_playerController.playerHp < i)
             {
-                images[i-1].gameObject.SetActive(false);
+                images[i-1].color = Color.white;
             }
             else
             {
-                images[i-1].gameObject.SetActive(true);
+                images[i-1].color = Color.red;
             }
         }
     }
