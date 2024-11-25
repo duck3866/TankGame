@@ -242,7 +242,8 @@ public class EnemyMove : IState<EnemyController>
         _weight = 0;
         ResetPathColors();
         _enemyController.isJudgment = false;
-        GameManager.Instance.TurnChange("Player");
+        GameManager.Instance.TurnChange();
+        _enemyController.isEnemyTurn = false;
         // _enemyController.ChangeState(EnemyController.EnemyState.Attack);
     }
 

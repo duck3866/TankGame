@@ -47,7 +47,8 @@ public class EnemyAttack : IState<EnemyController>
         bulletRigidbody.AddForce(currentObject.transform.forward * attackPower, ForceMode.Impulse);
         
         _enemyController.isJudgment = false;
-        GameManager.Instance.TurnChange("Player");
+        GameManager.Instance.TurnChange();
+        _enemyController.isEnemyTurn = false;
     }
 
     private void JudgmentAttackPower()
@@ -75,6 +76,6 @@ public class EnemyAttack : IState<EnemyController>
 
     public void OperateExit(EnemyController sender)
     {
-        GameManager.Instance.TurnChange("Player");
+        
     }
 }

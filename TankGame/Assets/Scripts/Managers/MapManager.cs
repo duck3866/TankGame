@@ -43,6 +43,7 @@ public class MapManager : MonoBehaviour
         enemy = Instantiate(enemy);
         _enemyController = enemy.GetComponent<EnemyController>();
         enemy.transform.position = new Vector3(-5, 10, 5);
+        
     }
 
     private void Start()
@@ -58,7 +59,8 @@ public class MapManager : MonoBehaviour
         }
         ResetList();
         ChangeMap(mapIndex);
-        
+        GameManager.Instance.TurnList.Enqueue(player);
+        GameManager.Instance.TurnList.Enqueue(enemy);
     }
     private void ResetList()
     {
@@ -94,6 +96,7 @@ public class MapManager : MonoBehaviour
 
     public void OnClickPlus()
     {
+        GameManager.Instance.TurnChange();
         UIManager.Instance.clearPanel.SetActive(false);
         mapIndex++;
         ResetList();
@@ -101,6 +104,7 @@ public class MapManager : MonoBehaviour
     }
     public void OnClickMinus()
     {
+        GameManager.Instance.TurnChange();
         UIManager.Instance.clearPanel.SetActive(false);
         mapIndex--;
         ResetList();

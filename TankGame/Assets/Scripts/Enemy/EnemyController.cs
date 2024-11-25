@@ -59,7 +59,6 @@ public class EnemyController : MonoBehaviour,IDamagable
 
     private void StateJudgment()
     {
-        Debug.Log("다시 정합니다.");
         isJudgment = true;
         if (Vector3.Distance(_player.transform.position,transform.position) < 6f)
         {

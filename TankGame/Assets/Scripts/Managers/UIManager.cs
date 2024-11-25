@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameManager.Instance.player;
+            player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
                 _playerController = player.GetComponent<PlayerController>();

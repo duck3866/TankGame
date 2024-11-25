@@ -19,37 +19,23 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                playerController = player.GetComponent<PlayerController>();
-            }
-        }
-        if (enemy == null)
-        {
-            enemy = GameObject.FindGameObjectWithTag("Enemy");
-            if (enemy != null)
-            {
-                enemyController = enemy.GetComponent<EnemyController>();
-            }
-        }
     }
-    public void TurnChange(string name)
+    public void TurnChange()
     {
-        switch (name)
+        GameObject gameObject = TurnList.Peek();
+        TurnList.Enqueue(gameObject);
+        TurnList.Dequeue();
+        if (TurnList.Peek().CompareTag("Player"))
         {
-            case "Player":
-                playerController.isPlayerTurn = true;
-                enemyController.isEnemyTurn = false;
-                nowTurn = "Player Turn";
-                break;
-            case "Enemy":
-                enemyController.isEnemyTurn = true;
-                playerController.isPlayerTurn = false;
-                nowTurn = "Enemy Turn";
-                break;
+            playerController = TurnList.Peek().GetComponent<PlayerController>();
+            playerController.isPlayerTurn = true;
+            nowTurn = "Player Turn";
+        }
+        else
+        {
+            enemyController = TurnList.Peek().GetComponent<EnemyController>();
+            enemyController.isEnemyTurn = true;
+            nowTurn = "Enemy Turn";
         }
         UIManager.Instance.TurnTextChange();
     }

@@ -507,6 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0663f9276d6d143c9ab337a49556ee50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPower: 1
   lineRenderer: {fileID: 1368656094967769541}
   isPlayerTurn: 0
   layerMask:
