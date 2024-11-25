@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     [HideInInspector] public GameObject enemy;
     [HideInInspector] public EnemyController enemyController;
-
+    public Queue<GameObject> TurnList = new Queue<GameObject>(); 
     public string nowTurn;
 
     public void Awake()

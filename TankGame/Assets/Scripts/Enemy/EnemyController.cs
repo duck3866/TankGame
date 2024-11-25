@@ -51,7 +51,6 @@ public class EnemyController : MonoBehaviour,IDamagable
         {
             _player = GameObject.FindGameObjectWithTag("Player");
         }
-        Debug.Log(_currentState);
         if (isEnemyTurn)
         {
             _currentState?.OperateUpdate(this);    
@@ -75,6 +74,7 @@ public class EnemyController : MonoBehaviour,IDamagable
     }
     private void OnEnable()
     {
+        isJudgment = false;
         enemyHp = 5;
         isEnemyTurn = false;
     }

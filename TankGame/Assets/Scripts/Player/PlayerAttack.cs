@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class PlayerAttack : IState<PlayerController>
 {
+    private float attackPower;
+    private float minAttackPower = 1;
+    private float maxAttackPower = 9;
     private int lineSegments = 60;
     private float timeOfTheFlight = 5;
     
@@ -23,6 +26,7 @@ public class PlayerAttack : IState<PlayerController>
         TurretRotate();
         MuzzleRotate();
         Shooting();
+        Debug.Log(attackPower);
     }
 
     public void OperateExit(PlayerController _player)
@@ -55,8 +59,23 @@ public class PlayerAttack : IState<PlayerController>
             Vector3 shootDirection = shootPoint.forward.normalized; // 방향 벡터 정규화
 
             bulletRigidbody.velocity = Vector3.zero; // 기존 속도 초기화
-            bulletRigidbody.AddForce(shootDirection * 9f, ForceMode.Impulse);
+            bulletRigidbody.AddForce(shootDirection * attackPower, ForceMode.Impulse);
             _playerController.ChangeState(PlayerController.PlayerState.Move);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (attackPower < maxAttackPower)
+            {
+                attackPower++;   
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (attackPower > minAttackPower)
+            {
+                attackPower--;
+            }
         }
     }
     private void TurretRotate()

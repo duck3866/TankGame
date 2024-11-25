@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
     
     private void PerformAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f,targerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.3f,targerMask);
         foreach (var hitCollider in colliders)
         {
             if (hitCollider != null && hitCollider.TryGetComponent<IDamagable>(out var target))
