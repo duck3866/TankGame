@@ -63,9 +63,7 @@ public class MapManager : MonoBehaviour
         }
         ResetList();
         ChangeMap(mapIndex);
-        GameManager.Instance.TurnList.Enqueue(player);
-        GameManager.Instance.TurnList.Enqueue(enemy);
-        GameManager.Instance.TurnList.Enqueue(enemy2);
+        GameManager.Instance.TurnList.Add(player);
     }
     private void ResetList()
     {
@@ -157,6 +155,13 @@ public class MapManager : MonoBehaviour
         enemy.transform.position = new Vector3(enemyX,0.55f,enemyY);
         enemy2.transform.position = new Vector3(enemyX,0.55f,enemyY);
         
+        
+        GameManager.Instance.TurnList.Add(enemy);
+        GameManager.Instance.TurnList.Add(enemy2);
+        foreach (var VARIABLE in GameManager.Instance.TurnList)
+        {
+            Debug.Log(VARIABLE.name);
+        }
         yield return null;
     }
 

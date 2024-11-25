@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     [HideInInspector] public GameObject enemy;
     [HideInInspector] public EnemyController enemyController;
-    public Queue<GameObject> TurnList = new Queue<GameObject>(); 
+    public List<GameObject> TurnList = new List<GameObject>(); 
     public string nowTurn;
 
     public void Awake()
@@ -20,20 +20,21 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+    
     public void TurnChange()
     {
-        GameObject gameObject = TurnList.Peek();
-        TurnList.Enqueue(gameObject);
-        TurnList.Dequeue();
-        if (TurnList.Peek().CompareTag("Player"))
+        GameObject gameObject = TurnList[0];
+        TurnList.Remove(gameObject);
+        TurnList.Add(gameObject);
+        if (TurnList[0].CompareTag("Player"))
         {
-            playerController = TurnList.Peek().GetComponent<PlayerController>();
+            playerController = TurnList[0].GetComponent<PlayerController>();
             playerController.isPlayerTurn = true;
             nowTurn = "Player Turn";
         }
         else
         {
-            enemyController = TurnList.Peek().GetComponent<EnemyController>();
+            enemyController = TurnList[0].GetComponent<EnemyController>();
             enemyController.isEnemyTurn = true;
             nowTurn = "Enemy Turn";
         }

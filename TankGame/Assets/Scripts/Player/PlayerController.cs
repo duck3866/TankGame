@@ -9,7 +9,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour,IDamagable
 {
-
+    public AudioClip[] AudioClips;
+    [HideInInspector] public AudioSource audioSource;
     public float attackPower = 1;
     public LineRenderer lineRenderer;
     public bool isPlayerTurn = false;
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         Idle
     }
     
-    public AudioSource audioSource;
+   
     private IState<PlayerController> _currentState;
     private Dictionary<PlayerState, IState<PlayerController>> _dicState =
         new Dictionary<PlayerState, IState<PlayerController>>();
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         playerHp = 5;
         playerTurn = 0;
         audioSource = GetComponent<AudioSource>();
+        audioSource.clip = AudioClips[0];
         lineRenderer = GetComponent<LineRenderer>();
         IState<PlayerController> Move = new PlayerMove();
         IState<PlayerController> Attack = new PlayerAttack();
@@ -80,6 +82,10 @@ public class PlayerController : MonoBehaviour,IDamagable
         }
     }
 
+    public void PlaySound()
+    {
+        audioSource.Play();
+    }
     private void OnEnable()
     {
         maxFuel = 10;

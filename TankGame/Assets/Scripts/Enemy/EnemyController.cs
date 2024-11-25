@@ -42,7 +42,6 @@ public class EnemyController : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
-        CheckImage();
         if (_player != null)
         {
             if (!isJudgment)
@@ -92,10 +91,16 @@ public class EnemyController : MonoBehaviour,IDamagable
         isJudgment = false;
         enemyHp = 5;
         isEnemyTurn = false;
+        CheckImage();
     }
 
     private void OnDisable()
     {
+        GameManager.Instance.TurnList.Remove(this.gameObject);
+        if (isEnemyTurn)
+        {
+            GameManager.Instance.TurnChange();
+        }
         MapManager.Instace.EnemyDieCheck();
     }
 
@@ -109,6 +114,7 @@ public class EnemyController : MonoBehaviour,IDamagable
         {
             gameObject.SetActive(false);
         }
+        CheckImage();
     }
 
     public void ChangeState(EnemyState newState)
