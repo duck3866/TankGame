@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class PlayerAttack : IState<PlayerController>
 {
-    private float attackPower;
     private float minAttackPower = 1;
     private float maxAttackPower = 9;
     private int lineSegments = 60;
@@ -26,7 +25,6 @@ public class PlayerAttack : IState<PlayerController>
         TurretRotate();
         MuzzleRotate();
         Shooting();
-        Debug.Log(attackPower);
     }
 
     public void OperateExit(PlayerController _player)
@@ -59,24 +57,25 @@ public class PlayerAttack : IState<PlayerController>
             Vector3 shootDirection = shootPoint.forward.normalized; // 방향 벡터 정규화
 
             bulletRigidbody.velocity = Vector3.zero; // 기존 속도 초기화
-            bulletRigidbody.AddForce(shootDirection * attackPower, ForceMode.Impulse);
+            bulletRigidbody.AddForce(shootDirection * _playerController.attackPower, ForceMode.Impulse);
             _playerController.ChangeState(PlayerController.PlayerState.Move);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (attackPower < maxAttackPower)
+            if (_playerController.attackPower < maxAttackPower)
             {
-                attackPower++;   
+                _playerController.attackPower++;
             }
         }
-        else if(Input.GetKeyDown(KeyCode.E))
+        else if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (attackPower > minAttackPower)
+            if (_playerController.attackPower > minAttackPower)
             {
-                attackPower--;
+                _playerController.attackPower--;
             }
         }
+        UIManager.Instance.powerGageSlider.value =  _playerController.attackPower / maxAttackPower;
     }
     private void TurretRotate()
     {
@@ -114,31 +113,39 @@ public class PlayerAttack : IState<PlayerController>
         Vector3[] lineRendererPoints = new Vector3[lineSegments];
         lineRendererPoints[0] = startPoint;
         
+        Vector3 currentPoint = startPoint;
+        Vector3 currentVelocity = startVelocity;
+
         for (int i = 1; i < lineSegments; i++)
         {
-            Vector3 progressBeforeGravity = startVelocity * timeStep;
+            Vector3 progressBeforeGravity = currentVelocity * timeStep;
             Vector3 gravityOffset = Vector3.up * -0.5f * Physics.gravity.y * timeStep * timeStep;
-            Vector3 nextPosition = startPoint + progressBeforeGravity - gravityOffset;
-            //----------------
-            Vector3 direction = (nextPosition - startPoint).normalized;
-            float distance = Vector3.Distance(startPoint, nextPosition);
-        
+            Vector3 nextPosition = currentPoint + progressBeforeGravity - gravityOffset;
+            
+            Vector3 direction = (nextPosition - currentPoint).normalized;
+
+            float baseDistance = Vector3.Distance(currentPoint, nextPosition) * (_playerController.attackPower / 9);
             RaycastHit raycastHit;
-            if (Physics.Raycast(startPoint, direction, out raycastHit, distance))
+            if (Physics.Raycast(currentPoint, direction, out raycastHit, baseDistance))
             {
                 if (raycastHit.collider.CompareTag("Block"))
                 {
-                    lineRendererPoints[i] = new Vector3(raycastHit.point.x,0,raycastHit.point.z);
-                    // for (int j = i + 1; j < lineSegments; j++)
-                    // {
-                    //     lineRendererPoints[j] = raycastHit.point;
-                    // }
+                    lineRendererPoints[i] = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
+                    
+                    for (int j = i + 1; j < lineSegments; j++)
+                    {
+                        lineRendererPoints[j] = lineRendererPoints[i];
+                    }
                     break;
                 }
             }
+            
+            Vector3 normalizedDirection = (nextPosition - currentPoint).normalized;
+            nextPosition = currentPoint + (normalizedDirection * baseDistance);
+        
             lineRendererPoints[i] = nextPosition;
-            startPoint = nextPosition;
-            startVelocity += Physics.gravity * timeStep;
+            currentPoint = nextPosition;
+            currentVelocity += Physics.gravity * timeStep;
         }
 
         return lineRendererPoints;

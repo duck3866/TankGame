@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private GameObject player;
+    public Slider powerGageSlider;
     private PlayerController _playerController;
     [SerializeField] private TextMeshProUGUI clearTurnText;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;

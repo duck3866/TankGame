@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour,IDamagable
 {
+
+    public float attackPower = 1;
     public LineRenderer lineRenderer;
     public bool isPlayerTurn = false;
     public LayerMask layerMask;
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         new Dictionary<PlayerState, IState<PlayerController>>();
     private void Start()
     {
+        attackPower = 1;
         playerHp = 5;
         playerTurn = 0;
         audioSource = GetComponent<AudioSource>();
