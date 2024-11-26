@@ -3,23 +3,23 @@
     {
       "stage": "0",
       "name": "A-1",
-      "horizontal": "15",
-      "vertical": "15",
-      "playerX": "0",
-      "playerY": "0",
-      "enemyX": "5",
-      "enemyY": "5",
-      "enemyCount": "1"
-    },
-    {
-      "stage": "1",
-      "name": "A-2",
       "horizontal": "8",
       "vertical": "9",
       "playerX": "1",
       "playerY": "2",
       "enemyX": "3",
       "enemyY": "3",
+      "enemyCount": "1"
+    },
+    {
+      "stage": "1",
+      "name": "A-2",
+      "horizontal": "15",
+      "vertical": "15",
+      "playerX": "0",
+      "playerY": "0",
+      "enemyX": "5",
+      "enemyY": "5",
       "enemyCount": "2"
     },
     {

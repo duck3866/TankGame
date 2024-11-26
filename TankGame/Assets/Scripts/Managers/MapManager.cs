@@ -45,7 +45,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         mapIndex = 0;
-        poolSize = DataManager.Instance.datas.Stage[0].horizontal * DataManager.Instance.datas.Stage[0].vertical;
+        poolSize = DataManager.Instance.datas.Stage[1].horizontal * DataManager.Instance.datas.Stage[1].vertical;
         _objectList = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++)
         {
@@ -134,10 +134,10 @@ public class MapManager : MonoBehaviour
 
         int enemyX = DataManager.Instance.datas.Stage[value].enemyX;
         int enemyY = DataManager.Instance.datas.Stage[value].enemyY;
-        Debug.Log("여기까지는 ok");
+        // Debug.Log("여기까지는 ok");
         for (int i = 0; i < DataManager.Instance.datas.Stage[value].enemyCount; i++)
         {
-            Debug.Log("아니 이거 왜 안됨");
+            // Debug.Log("아니 이거 왜 안됨");
             GameObject instanEnemy = Instantiate(enemy);
             instanEnemy.SetActive(true);
             enemyList.Add(instanEnemy);

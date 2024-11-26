@@ -20,9 +20,15 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
-    
+
+    private void Start()
+    {
+        UIManager.Instance.TurnImageCheck(TurnList);
+    }
+
     public void TurnChange()
     {
+        UIManager.Instance.TurnImageCheck(TurnList);
         GameObject gameObject = TurnList[0];
         TurnList.Remove(gameObject);
         TurnList.Add(gameObject);

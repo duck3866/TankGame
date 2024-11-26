@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     private PlayerController _playerController;
     [SerializeField] private TextMeshProUGUI clearTurnText;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
-    [SerializeField] private Image[] images;
+    [SerializeField] private Image[] hpImages;
     [SerializeField] private GameObject diePanel;
     public GameObject clearPanel;
     [SerializeField] private TextMeshProUGUI nowTurn;
@@ -22,6 +22,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject leftButton;
     public AudioClip[] AudioClips;
     [HideInInspector] public AudioSource AudioSource;
+    
+    public GameObject imageParent;
+    public Image playerImage;
+    public Image enemyImage;
     private void Awake()
     {
         if (Instance == null)
@@ -54,19 +58,40 @@ public class UIManager : MonoBehaviour
     }
     public void CheckImage()
     { 
-        for (int i = 1; i <= images.Length; i++)
+        for (int i = 1; i <= hpImages.Length; i++)
         {
             if (_playerController.playerHp < i)
             {
-                images[i-1].color = Color.white;
+                hpImages[i-1].color = Color.white;
             }
             else
             {
-                images[i-1].color = Color.red;
+                hpImages[i-1].color = Color.red;
             }
         }
     }
 
+    public void TurnImageCheck(List<GameObject> turnList)
+    {
+        Debug.Log("dsmdsdmsdsdmslds");
+        for (int i = 0; i < imageParent.transform.childCount; i++)
+        {
+            GameObject child = imageParent.transform.GetChild(i).gameObject;
+            Destroy(child);
+        }
+
+        foreach (var VARIABLE in turnList)
+        {
+            if (VARIABLE.gameObject.CompareTag("Player"))
+            {
+                Instantiate(playerImage, imageParent.transform);
+            }
+            else
+            {
+                Instantiate(enemyImage, imageParent.transform);
+            }
+        }
+    }
     public void Initialized()
     {
         if (_playerController != null)
