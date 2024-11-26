@@ -17,7 +17,10 @@ public class UIManager : MonoBehaviour
     public GameObject clearPanel;
     [SerializeField] private TextMeshProUGUI nowTurn;
     public static UIManager Instance = null;
-
+    [SerializeField] private GameObject rightButton;
+    [SerializeField] private GameObject leftButton;
+    public AudioClip[] AudioClips;
+    [HideInInspector] public AudioSource AudioSource;
     private void Awake()
     {
         if (Instance == null)
@@ -28,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     public void Start()
     {
+        AudioSource = GetComponent<AudioSource>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -74,12 +78,26 @@ public class UIManager : MonoBehaviour
 
     public void GameClearPanel()
     {
+        AudioSource.clip = AudioClips[1];
+        AudioSource.Play();
         clearTurnText.text = "턴 수 :"+_playerController.playerTurn;
         player.SetActive(false);
         clearPanel.SetActive(true);
+        leftButton.SetActive(true);
+        rightButton.SetActive(true);
+        if (MapManager.Instace.mapIndex == 0)
+        {
+            leftButton.SetActive(false);
+        }
+        else if (MapManager.Instace.mapIndex == 3)
+        {
+            rightButton.SetActive(false);
+        }
     }
     public void DiePanel()
     {
+        AudioSource.clip = AudioClips[0];
+        AudioSource.Play();
         diePanel.SetActive(true);
     }
 }

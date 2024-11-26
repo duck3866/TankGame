@@ -15,7 +15,7 @@ public class PlayerAttack : IState<PlayerController>
     public void OperateEnter(PlayerController _player)
     {
         _playerController = _player;
-        _playerController.audioSource.clip = _playerController.AudioClips[0];
+        
         _playerController.lineRenderer.enabled = true;
     }
 
@@ -47,7 +47,8 @@ public class PlayerAttack : IState<PlayerController>
                 return;
             }
             GameObject currentObject = _playerController.shootingPoint;
-            // Debug.Log($"현재 클립 {_playerController.audioSource.clip}");
+            
+            _playerController.audioSource.clip = _playerController.AudioClips[0];
             _playerController.PlaySound();
             
             GameObject bullet = BulletManager.Instace.GetObject();

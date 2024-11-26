@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         playerHp = 5;
         playerTurn = 0;
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = AudioClips[0];
+        // audioSource.clip = AudioClips[0];
         lineRenderer = GetComponent<LineRenderer>();
         IState<PlayerController> Move = new PlayerMove();
         IState<PlayerController> Attack = new PlayerAttack();

@@ -21,11 +21,12 @@ public class MapManager : MonoBehaviour
     
     [SerializeField] private int poolSize;
     private GameObject[] _objectList;
-    [SerializeField] private int mapIndex;
+    public int mapIndex;
     
     [SerializeField] private float dropHeight = 10f;  // 블록이 시작할 높이
     [SerializeField] private float dropDuration = 1f; // 떨어지는데 걸리는 시간
     [SerializeField] private float blockDelay = 0.05f; // 블록간 딜레이
+    
 
     public int[,] MapList;
 

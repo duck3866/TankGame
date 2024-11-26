@@ -28,7 +28,7 @@ public class PlayerMove : IState<PlayerController>
     public void OperateEnter(PlayerController _player)
     {
         _playerController = _player;
-        _playerController.audioSource.clip = _playerController.AudioClips[1];
+        
         if (!_isInit)
         {
             _isInit = true;
@@ -234,7 +234,7 @@ public class PlayerMove : IState<PlayerController>
                 _playerController.playerY -= 1;
                 PlayerMoving(Vector3.back);
             }
-            Debug.Log($"현재 클립 {_playerController.audioSource.clip}");
+            _playerController.audioSource.clip = _playerController.AudioClips[1];
             _playerController.PlaySound();
             MapManager.Instace.MapList[_playerController.playerX, _playerController.playerY] = 1;
             _pathRenderers[0].material.color = Color.white;
