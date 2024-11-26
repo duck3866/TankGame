@@ -151,10 +151,10 @@ public class MapManager : MonoBehaviour
         enemy2.SetActive(true);
         enemyList.Add(enemy2);
         _enemyController = enemy2.GetComponent<EnemyController>();
-        _enemyController.enemyX = enemyX;
+        _enemyController.enemyX = enemyX+1;
         _enemyController.enemyY = enemyY;
         enemy.transform.position = new Vector3(enemyX,0.55f,enemyY);
-        enemy2.transform.position = new Vector3(enemyX,0.55f,enemyY);
+        enemy2.transform.position = new Vector3(enemyX+1,0.55f,enemyY);
         
         
         GameManager.Instance.TurnList.Add(enemy);

@@ -19,6 +19,8 @@ public class EnemyController : MonoBehaviour,IDamagable
     public GameObject turret;
     
     public GameObject shootingPoint;
+
+    private AudioSource AudioSource;
     
     public bool isJudgment = false;
     
@@ -33,6 +35,7 @@ public class EnemyController : MonoBehaviour,IDamagable
     private void Start()
     {
         enemyHp = 5;
+        AudioSource = GetComponent<AudioSource>();
         IState<EnemyController> Move = new EnemyMove();
         IState<EnemyController> Attack = new EnemyAttack();
         _dicState.Add(EnemyState.Move,Move);
@@ -94,6 +97,10 @@ public class EnemyController : MonoBehaviour,IDamagable
         CheckImage();
     }
 
+    public void PlaySound()
+    {
+        AudioSource.Play();
+    }
     private void OnDisable()
     {
         GameManager.Instance.TurnList.Remove(this.gameObject);
@@ -102,11 +109,12 @@ public class EnemyController : MonoBehaviour,IDamagable
             GameManager.Instance.TurnChange();
         }
         MapManager.Instace.EnemyDieCheck();
+        ChangeState(EnemyState.Move);
     }
 
     public void TakeDamage(int hitPower)
     {
-        if (enemyHp >= 1)
+        if (enemyHp > 1)
         {
             enemyHp -= hitPower;
         }

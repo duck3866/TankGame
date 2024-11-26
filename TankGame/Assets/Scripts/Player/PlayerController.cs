@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour,IDamagable
 
     public void TakeDamage(int hitPower)
     {
-        if (playerHp >= 1)
+        if (playerHp > 1)
         {
             playerHp -= hitPower; 
             UIManager.Instance.CheckImage();

@@ -61,14 +61,16 @@ public class PlayerMove : IState<PlayerController>
                 {
                     _playerController.StartCoroutine(MoveAlongPath(_currentPath));
                     // ResetPathColors();
+                    _playerController.audioSource.clip = _playerController.AudioClips[1];
+                    _playerController.PlaySound();
                     _pathDrawn = false;
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(1)) // 우클릭
-        {
-            CancelPath();
-        }
+        // else if (Input.GetMouseButtonDown(1)) // 우클릭
+        // {
+        //     CancelPath();
+        // }
     }
 
     public void OperateExit(PlayerController _player)
@@ -234,8 +236,6 @@ public class PlayerMove : IState<PlayerController>
                 _playerController.playerY -= 1;
                 PlayerMoving(Vector3.back);
             }
-            _playerController.audioSource.clip = _playerController.AudioClips[1];
-            _playerController.PlaySound();
             MapManager.Instace.MapList[_playerController.playerX, _playerController.playerY] = 1;
             _pathRenderers[0].material.color = Color.white;
             Renderer renderer = _pathRenderers[0];

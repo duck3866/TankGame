@@ -29,7 +29,7 @@ public class EnemyAttack : IState<EnemyController>
         Debug.Log("이거 매번 해야해");
         yield return new WaitForSeconds(2f);
 
-       
+        _enemyController.PlaySound();
         GameObject currentObject = _enemyController.turret;
         
         Vector3 targetPosition = _enemyController._player.transform.position;

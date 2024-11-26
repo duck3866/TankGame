@@ -36,8 +36,7 @@ public class EnemyMove : IState<EnemyController>
             _isInit = true;
             Initialize();
         }
-
-        
+        ResetPathColors();
     }
 
     public void OperateUpdate(EnemyController _enemy)
