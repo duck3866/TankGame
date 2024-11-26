@@ -1054,7 +1054,12 @@ MonoBehaviour:
   powerGageSlider: {fileID: 1308616487}
   clearTurnText: {fileID: 843975491}
   textMeshProUGUI: {fileID: 275199635}
-  hpImages: []
+  hpImages:
+  - {fileID: 771389376}
+  - {fileID: 1632435274}
+  - {fileID: 473924890}
+  - {fileID: 1886257472}
+  - {fileID: 949133163}
   diePanel: {fileID: 112945375}
   clearPanel: {fileID: 1788529328}
   nowTurn: {fileID: 369148228}

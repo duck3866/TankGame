@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour,IDamagable
         ChangeState(PlayerState.Move);
 
         isPlayerTurn = true;
+        // GameManager.Instance.TurnChange();
     }
     public void ChangeState(PlayerState newState)
     {

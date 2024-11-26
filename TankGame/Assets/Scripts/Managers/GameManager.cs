@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     public void TurnChange()
     {
-        UIManager.Instance.TurnImageCheck(TurnList);
         GameObject gameObject = TurnList[0];
         TurnList.Remove(gameObject);
         TurnList.Add(gameObject);
@@ -45,5 +44,6 @@ public class GameManager : MonoBehaviour
             nowTurn = "Enemy Turn";
         }
         UIManager.Instance.TurnTextChange();
+        UIManager.Instance.TurnImageCheck(TurnList);
     }
 }
