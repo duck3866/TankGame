@@ -26,7 +26,6 @@ public class EnemyAttack : IState<EnemyController>
 
     private IEnumerator WaitShoot()
     {
-        Debug.Log("이거 매번 해야해");
         yield return new WaitForSeconds(2f);
 
         _enemyController.PlaySound();
@@ -37,13 +36,13 @@ public class EnemyAttack : IState<EnemyController>
         targetPosition.y = shootingPosition.y;
         
         currentObject.transform.LookAt(targetPosition);
-
+        JudgmentAttackPower();
+        yield return new WaitForSeconds(0.3f);
         GameObject bullet = BulletManager.Instace.GetObject();
         bullet.transform.position = shootingPosition;
         Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = Vector3.zero; // 기존 속도 초기화
-        // Vector3 direction = (targetPosition - shootingPosition).normalized;
-        JudgmentAttackPower();
+        bulletRigidbody.velocity = Vector3.zero;
+        
         bulletRigidbody.AddForce(currentObject.transform.forward * attackPower, ForceMode.Impulse);
         
         _enemyController.isJudgment = false;
