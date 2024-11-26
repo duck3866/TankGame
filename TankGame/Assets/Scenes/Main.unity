@@ -3231,7 +3231,6 @@ MonoBehaviour:
   playerFactory: {fileID: 5444145848116010292, guid: b34fa1da317624a658090201144c581c, type: 3}
   player: {fileID: 5444145848116010292, guid: b34fa1da317624a658090201144c581c, type: 3}
   enemy: {fileID: 6533599875555860737, guid: 93601f26129714474bab3e23bfe82060, type: 3}
-  enemy2: {fileID: 0}
   enemyList: []
   poolSize: 50
   mapIndex: 0
@@ -3974,7 +3973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84ec8d3e9cd74271926c9cbba815d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 4900000, guid: c6e972d92774b42e7949b93fe36a5201, type: 3}
+  data: {fileID: 4900000, guid: b8e5a2af2b7aa4562b5e89c432b70b47, type: 3}
   datas:
     Stage: []
 --- !u!1 &2077598187

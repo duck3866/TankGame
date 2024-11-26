@@ -41,4 +41,5 @@ public class MapData
     public int playerY;
     public int enemyX;
     public int enemyY;
+    public int enemyCount;
 }

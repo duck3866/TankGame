@@ -8,7 +8,8 @@
       "playerX": "0",
       "playerY": "0",
       "enemyX": "5",
-      "enemyY": "5"
+      "enemyY": "5",
+      "enemyCount": "1"
     },
     {
       "stage": "1",
@@ -18,7 +19,8 @@
       "playerX": "1",
       "playerY": "2",
       "enemyX": "3",
-      "enemyY": "3"
+      "enemyY": "3",
+      "enemyCount": "2"
     },
     {
       "stage": "2",
@@ -28,7 +30,8 @@
       "playerX": "1",
       "playerY": "1",
       "enemyX": "2",
-      "enemyY": "2"
+      "enemyY": "2",
+      "enemyCount": "3"
     },
     {
       "stage": "3",
@@ -38,7 +41,8 @@
       "playerX": "0",
       "playerY": "4",
       "enemyX": "18",
-      "enemyY": "1"
+      "enemyY": "4",
+      "enemyCount": "4"
     }
   ]
 }

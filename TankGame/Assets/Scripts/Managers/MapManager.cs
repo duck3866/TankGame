@@ -14,8 +14,6 @@ public class MapManager : MonoBehaviour
     [HideInInspector] public GameObject player;
     private PlayerController _playerController;
     public GameObject enemy;
-    public GameObject enemy2;
-    private EnemyController _enemyController;
 
     public List<GameObject> enemyList = new List<GameObject>(); 
     
@@ -41,14 +39,7 @@ public class MapManager : MonoBehaviour
         player = Instantiate(playerFactory);
         _playerController = player.GetComponent<PlayerController>();
         player.transform.position = new Vector3(-5, 10, 5);
-        
-        enemy = Instantiate(enemy);
-        
-        enemy.transform.position = new Vector3(-5, 10, 5);
-        
-        enemy2 = Instantiate(enemy);
-        enemy2.transform.position = new Vector3(-5, 10, 5);
-        
+
     }
 
     private void Start()
@@ -64,6 +55,7 @@ public class MapManager : MonoBehaviour
         }
         ResetList();
         ChangeMap(mapIndex);
+        Debug.Log("ChangeMap 시전");
         GameManager.Instance.TurnList.Add(player);
     }
     private void ResetList()
@@ -91,7 +83,7 @@ public class MapManager : MonoBehaviour
         return _objectList[count];
     }
         
-    private void ChangeMap(int value)
+    public void ChangeMap(int value)
     {
         StartCoroutine(FallingBlock(value));
     }
@@ -142,26 +134,18 @@ public class MapManager : MonoBehaviour
 
         int enemyX = DataManager.Instance.datas.Stage[value].enemyX;
         int enemyY = DataManager.Instance.datas.Stage[value].enemyY;
-        
-        enemy.SetActive(true);
-        enemyList.Add(enemy);
-        _enemyController = enemy.GetComponent<EnemyController>();
-        _enemyController.enemyX = enemyX;
-        _enemyController.enemyY = enemyY;
-        enemy2.SetActive(true);
-        enemyList.Add(enemy2);
-        _enemyController = enemy2.GetComponent<EnemyController>();
-        _enemyController.enemyX = enemyX+1;
-        _enemyController.enemyY = enemyY;
-        enemy.transform.position = new Vector3(enemyX,0.55f,enemyY);
-        enemy2.transform.position = new Vector3(enemyX+1,0.55f,enemyY);
-        
-        
-        GameManager.Instance.TurnList.Add(enemy);
-        GameManager.Instance.TurnList.Add(enemy2);
-        foreach (var VARIABLE in GameManager.Instance.TurnList)
+        Debug.Log("여기까지는 ok");
+        for (int i = 0; i < DataManager.Instance.datas.Stage[value].enemyCount; i++)
         {
-            Debug.Log(VARIABLE.name);
+            Debug.Log("아니 이거 왜 안됨");
+            GameObject instanEnemy = Instantiate(enemy);
+            instanEnemy.SetActive(true);
+            enemyList.Add(instanEnemy);
+            EnemyController _enemyController = instanEnemy.GetComponent<EnemyController>();
+            _enemyController.enemyX = enemyX;
+            _enemyController.enemyY = enemyY;
+            instanEnemy.transform.position = new Vector3(enemyX,0.55f,enemyY);
+            GameManager.Instance.TurnList.Add(instanEnemy);
         }
         yield return null;
     }

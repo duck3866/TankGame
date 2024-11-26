@@ -101,7 +101,7 @@ public class EnemyController : MonoBehaviour,IDamagable
     {
         AudioSource.Play();
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.TurnList.Remove(this.gameObject);
         if (isEnemyTurn)
@@ -109,6 +109,7 @@ public class EnemyController : MonoBehaviour,IDamagable
             GameManager.Instance.TurnChange();
         }
         MapManager.Instace.EnemyDieCheck();
+        MapManager.Instace.enemyList.Remove(this.gameObject);
         ChangeState(EnemyState.Move);
     }
 
@@ -120,7 +121,7 @@ public class EnemyController : MonoBehaviour,IDamagable
         }
         else
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
         CheckImage();
     }
