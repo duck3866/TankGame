@@ -43,7 +43,7 @@ public class EnemyMove : IState<EnemyController>
     {
         if (_enemyController.isEnemyTurn && !_isJug)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(_enemyController._player.transform.position, 3f, _enemyController.layerMask);
+            Collider[] hitColliders = Physics.OverlapSphere(_enemyController._player.transform.position, 5f, _enemyController.layerMask);
             if (hitColliders != null)
             {
                 int randomPos = Random.Range(0, hitColliders.Length - 1);

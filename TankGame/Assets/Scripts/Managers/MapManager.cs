@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
         }
         ResetList();
         ChangeMap(mapIndex);
-        Debug.Log("ChangeMap 시전");
+        // Debug.Log("ChangeMap 시전");
         GameManager.Instance.TurnList.Add(player);
     }
     private void ResetList()

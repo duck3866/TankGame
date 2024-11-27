@@ -80,12 +80,12 @@ public class EnemyController : MonoBehaviour,IDamagable
         isJudgment = true;
         if (Vector3.Distance(_player.transform.position,transform.position) < 6f)
         {
-            Debug.Log("공격으로 전환");
+            // Debug.Log("공격으로 전환");
             ChangeState(EnemyState.Attack);    
         }
         else
         {
-            Debug.Log("이동으로 전환");
+            // Debug.Log("이동으로 전환");
             ChangeState(EnemyState.Move);
         }
     }

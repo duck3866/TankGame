@@ -73,7 +73,6 @@ public class UIManager : MonoBehaviour
 
     public void TurnImageCheck(List<GameObject> turnList)
     {
-        Debug.Log("dsmdsdmsdsdmslds");
         for (int i = 0; i < imageParent.transform.childCount; i++)
         {
             GameObject child = imageParent.transform.GetChild(i).gameObject;
