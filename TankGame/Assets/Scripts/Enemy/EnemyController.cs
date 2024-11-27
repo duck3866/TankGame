@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour,IDamagable
 {
+    [SerializeField] private GameObject imageParent;
     [SerializeField] private Image[] images;
     public GameObject _player;
     public bool isEnemyTurn = false;

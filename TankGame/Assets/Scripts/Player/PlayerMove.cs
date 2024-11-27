@@ -55,6 +55,8 @@ public class PlayerMove : IState<PlayerController>
                     {
                         HighlightPath(_currentPath);
                         _pathDrawn = true;
+                        _playerController.arrow.SetActive(true);
+                        _playerController.arrow.transform.position = _currentPath[_currentPath.Count-1] + new Vector3(0,0.5f,0);
                     }
                 }
                 else
@@ -243,7 +245,7 @@ public class PlayerMove : IState<PlayerController>
             _fuel -= 1;
             yield return new WaitForSeconds(_moveDelay);
         }
-
+        _playerController.arrow.SetActive(false);
         _fuel = _playerController.maxFuel;
         _weight = 0;
         ResetPathColors();

@@ -523,6 +523,8 @@ MonoBehaviour:
   shootingPoint: {fileID: 2668046741124652561}
   playerHp: 5
   playerTurn: 0
+  arrowObjectFactory: {fileID: 3555275738882474134, guid: 1ae6d55d3e7b1684aadad4ea8dc85663, type: 3}
+  arrow: {fileID: 4606503021664347322, guid: fbdf0b590e5324054a397468a1d85f2a, type: 3}
   playerX: 0
   playerY: 0
 --- !u!120 &1368656094967769541

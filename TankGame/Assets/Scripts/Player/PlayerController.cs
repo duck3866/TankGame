@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour,IDamagable
 
     public int playerHp = 5;
     public int playerTurn = 0;
-    
+
+    public GameObject arrowObjectFactory;
+    [HideInInspector] public GameObject arrow;
     [HideInInspector] public int playerX;
     [HideInInspector] public int playerY;
 
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour,IDamagable
         new Dictionary<PlayerState, IState<PlayerController>>();
     private void Start()
     {
+        arrow = Instantiate(arrowObjectFactory);
+        arrow.SetActive(false);
         attackPower = 1;
         playerHp = 5;
         playerTurn = 0;
