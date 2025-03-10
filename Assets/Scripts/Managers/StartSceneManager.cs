@@ -7,9 +7,9 @@ public class StartSceneManager : MonoBehaviour
 {
     [SerializeField] private string _playSceneName;
     [SerializeField] private GameObject _settingPanel;
+    [SerializeField] private GameObject _stagePanel;
     [SerializeField] private Animator _settingPanelAnimator;
-
-
+    
     public void Start()
     {
         // _settingPanelAnimator.SetTrigger("Start");
@@ -19,7 +19,8 @@ public class StartSceneManager : MonoBehaviour
     /// </summary>
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene(_playSceneName);
+        // SceneManager.LoadScene(_playSceneName);
+        _stagePanel.SetActive(true);
     }
     /// <summary>
     /// 종료 버튼 클릭 함수

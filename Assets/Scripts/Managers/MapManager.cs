@@ -54,7 +54,7 @@ public class MapManager : MonoBehaviour
             _objectList[i] = obj;
         }
         ResetList();
-        ChangeMap(mapIndex);
+        ChangeMap(StageManager.instance.index);
         // Debug.Log("ChangeMap 시전");
         GameManager.Instance.TurnList.Add(player);
     }
