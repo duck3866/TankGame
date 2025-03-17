@@ -130,4 +130,23 @@ public class UIManager : MonoBehaviour
         AudioSource.Play();
         diePanel.SetActive(true);
     }
+
+    public void OnClickSettingButton()
+    {
+        
+    }
+
+    public void OnClickGotoStartSceneButton()
+    {
+        SceneManager.LoadScene("Start");
+    }
+
+    public void OnClickCloseButton()
+    {
+        
+    }
+    public void OnClickExitGameButton()
+    {
+        Application.Quit();
+    }
 }

@@ -22,6 +22,15 @@ public class StartSceneManager : MonoBehaviour
         // SceneManager.LoadScene(_playSceneName);
         _stagePanel.SetActive(true);
     }
+    
+    /// <summary>
+    /// 스테이지 버튼 종료 함수
+    /// </summary>
+    public void OnClickCloseStageButton()
+    {
+        // SceneManager.LoadScene(_playSceneName);
+        _stagePanel.SetActive(false);
+    }
     /// <summary>
     /// 종료 버튼 클릭 함수
     /// </summary>
