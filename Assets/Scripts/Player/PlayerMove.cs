@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMove : IState<PlayerController>
 {
@@ -40,6 +41,10 @@ public class PlayerMove : IState<PlayerController>
     {
         if (Input.GetMouseButtonDown(0)) // 좌클릭
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
             if (Physics.Raycast(raycast, out raycastHit))

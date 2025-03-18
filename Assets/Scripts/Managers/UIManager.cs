@@ -22,7 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject leftButton;
     public AudioClip[] AudioClips;
     [HideInInspector] public AudioSource AudioSource;
-    
+
+    public GameObject SettingObject;
     public GameObject imageParent;
     public Image playerImage;
     public Image enemyImage;
@@ -133,7 +134,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickSettingButton()
     {
-        
+        SettingObject.SetActive(true);
     }
 
     public void OnClickGotoStartSceneButton()
@@ -143,7 +144,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickCloseButton()
     {
-        
+        SettingObject.SetActive(false);
     }
     public void OnClickExitGameButton()
     {

@@ -43,6 +43,72 @@
       "enemyX": "18",
       "enemyY": "4",
       "enemyCount": "4"
+    },
+    {
+      "stage": "4",
+      "name": "A-5",
+      "horizontal": "25",
+      "vertical": "7",
+      "playerX": "2",
+      "playerY": "4",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "4"
+    },
+    {
+      "stage": "5",
+      "name": "A-5",
+      "horizontal": "10",
+      "vertical": "8",
+      "playerX": "1",
+      "playerY": "4",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "4"
+    },
+    {
+      "stage": "6",
+      "name": "A-6",
+      "horizontal": "40",
+      "vertical": "5",
+      "playerX": "0",
+      "playerY": "0",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "7"
+    },
+    {
+      "stage": "7",
+      "name": "A-7",
+      "horizontal": "20",
+      "vertical": "5",
+      "playerX": "0",
+      "playerY": "4",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "4"
+    },
+    {
+      "stage": "8",
+      "name": "A-8",
+      "horizontal": "20",
+      "vertical": "5",
+      "playerX": "0",
+      "playerY": "4",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "4"
+    },
+    {
+      "stage": "9",
+      "name": "A-9",
+      "horizontal": "20",
+      "vertical": "5",
+      "playerX": "0",
+      "playerY": "4",
+      "enemyX": "18",
+      "enemyY": "4",
+      "enemyCount": "4"
     }
   ]
 }

@@ -21,6 +21,10 @@ public class PlayerAttack : IState<PlayerController>
 
     public void OperateUpdate(PlayerController _player)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         GameObject currentObject = _playerController.shootingPoint;
         ShowTrajectoryLine(currentObject.transform.position, currentObject.transform.forward * 6f);
         TurretRotate();
