@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class StartSceneManager : MonoBehaviour
@@ -9,10 +11,29 @@ public class StartSceneManager : MonoBehaviour
     [SerializeField] private GameObject _settingPanel;
     [SerializeField] private GameObject _stagePanel;
     [SerializeField] private Animator _settingPanelAnimator;
+    [SerializeField] private GameObject StagePanel;
+    [SerializeField] private GameObject StageContant;
     
     public void Start()
     {
         // _settingPanelAnimator.SetTrigger("Start");
+        OnSettingStageButton();
+    }
+
+    public void OnSettingStageButton()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            GameObject button = Instantiate(StagePanel,StageContant.transform);
+            button.SetActive(true);
+            int index = i;
+            button.GetComponent<Button>().onClick.AddListener(()=>StageManager.instance.OnStageButtonClicked(index));
+            TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = "stage_" + i.ToString();
+            Debug.Log($"{i} 흠..");
+        }
+
+        StageManager.instance.index = 0;
     }
     /// <summary>
     /// 시작 버튼 클릭 함수

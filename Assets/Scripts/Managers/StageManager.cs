@@ -38,6 +38,7 @@ public class StageManager : MonoBehaviour
     public void OnStageButtonClicked(int clickIndex)
     {
         index = clickIndex;
+        Debug.Log(index+" 와우 섹123스");
         SceneManager.LoadScene("Main");
     }
 }
