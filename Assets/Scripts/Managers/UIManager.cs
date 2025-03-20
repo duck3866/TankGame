@@ -124,6 +124,7 @@ public class UIManager : MonoBehaviour
         {
             rightButton.SetActive(false);
         }
+        SaveManager.instance.ClearStage(StageManager.instance.index);
     }
     public void DiePanel()
     {

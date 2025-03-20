@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveData 
+public class SaveData
 {
-    public Dictionary<string,bool> stageSaveDictionary = new Dictionary<string,bool>();
+    public List<bool> stageSaveDictionary = new List<bool>();
 }

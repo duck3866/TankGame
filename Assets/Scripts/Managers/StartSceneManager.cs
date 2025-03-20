@@ -17,11 +17,12 @@ public class StartSceneManager : MonoBehaviour
     public void Start()
     {
         // _settingPanelAnimator.SetTrigger("Start");
-        OnSettingStageButton();
+        StartCoroutine(OnSettingStageButton());
     }
 
-    public void OnSettingStageButton()
+    public IEnumerator OnSettingStageButton()
     {
+        yield return new WaitForSecondsRealtime(2f);
         for (int i = 0; i < 9; i++)
         {
             GameObject button = Instantiate(StagePanel,StageContant.transform);
@@ -31,8 +32,23 @@ public class StartSceneManager : MonoBehaviour
             TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
             text.text = "stage_" + i.ToString();
             Debug.Log($"{i} 흠..");
+            Image image = button.GetComponent<Image>();
+            if (SaveManager.instance.stageSaveDic != null)
+            {
+                if (SaveManager.instance.stageSaveDic[i])
+                {
+                    image.color = Color.green;
+                }
+                else
+                {
+                    image.color = Color.grey;
+                }
+            }
+            else
+            {
+                image.color = Color.grey; 
+            }
         }
-
         StageManager.instance.index = 0;
     }
     /// <summary>
