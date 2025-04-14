@@ -11,7 +11,6 @@
 - **다양한 맵 시스템**: CSV/JSON을 사용한 다양한 맵, 스테이지 형식으로 클리어 여부 제공.
 - **다중 플랫폼 지원**: PC, Mac 환경에서 플레이 가능.
 - **게임 메뉴**: Start 옵션으로 게임 시작 가능.
-
 ---
 
 ## 플레이 방법 (How to Play)
@@ -41,10 +40,13 @@
 ## CSV/JSON 을 사용한 세이브/로드 및 FSM 적용
 
 ### FSM
+<img width="919" alt="Image" src="https://github.com/user-attachments/assets/8d89f448-a108-4be2-8484-810bf3a6b6d4" />
+<img width="943" alt="Image" src="https://github.com/user-attachments/assets/ad6ba180-417f-492b-9492-678636cc14f7" />
 - 플레이어의 공격, 이동 상태를 분리하기 위해 FSM을 사용했습니다.
 - 기존에 사용하던 enum 방식의 FSM이 아닌 클래스를 만들어 딕셔너리 형태로 저장하는 FSM을 사용하여 더욱 확장성을 높일 수 있었습니다.
 
 ### CSV/JSON
+<img width="1010" alt="Image" src="https://github.com/user-attachments/assets/65f794c3-8f48-4527-9538-e4d5802aadfd" />
 - 엑셀을 활용해 맵의 크기, 적의 숫자 등을 설정하고 이를 JSON으로 파싱하여 간편하게 여러 맵을 구현할 수 있고
 - 스테이지 형식으로 JSON을 불러와 맵을 체험할 수 있으며 Json으로 클리어 여부를 판단합니다.
 
