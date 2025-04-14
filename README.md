@@ -49,6 +49,9 @@
 - 스테이지 형식으로 JSON을 불러와 맵을 체험할 수 있으며 Json으로 클리어 여부를 판단합니다.
 
 ---
+### Notion 
+- https://www.notion.so/14b9dfc52f178026b95cf9ace5814eb0?pvs=74
+---
 
 ## 라이선스 (License)
 
