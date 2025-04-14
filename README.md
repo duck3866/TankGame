@@ -1,5 +1,5 @@
 # Tank-Turn-Game!
-
+![Image](https://github.com/user-attachments/assets/f3823b9d-86e4-4f1c-820f-037abb2e98b8)
 **Tank-Trun-Game**은 Unity 3D에서 제작된 X-COM 장르 게임입니다. **CSV/JSON**을 활용해 맵 구조와 적을 배치하였으며, **확장성 높은 FSM**을 통해 적 AI를 구현하였습니다. PC와 Mac 환경에서 플레이 가능하며, 메뉴 화면에서 **Start** 옵션으로 게임을 시작할 수 있습니다.
 
 ---
